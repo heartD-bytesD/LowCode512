@@ -1,0 +1,47 @@
+<mxfile host="65bd71144e">
+    <diagram id="vt1E1tqs6K7o_Ixf-e7f" name="第 1 页">
+        <mxGraphModel dx="1348" dy="1487" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5" value="" style="edgeStyle=none;html=1;fontSize=20;" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;fontSize=20;" edge="1" parent="1" source="2" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="&lt;font style=&quot;font-size: 20px&quot;&gt;data/material&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="170" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="EditorLeft" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="-70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="EditorContent" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="170" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="endArrow=classic;html=1;fontSize=20;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="2" target="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="240" y="190" as="sourcePoint"/>
+                        <mxPoint x="290" y="140" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="260" y="190"/>
+                            <mxPoint x="260" y="-40"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="根据拖拽事件使用&amp;lt;component&amp;gt;动态生成和定位&amp;lt;Lc-XX&amp;gt;系列组件" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="50" width="320" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="根据materialList渲染可用组件列表" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="-180" width="240" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="main.ts" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="-230" y="170" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&lt;span&gt;app.component()全局注册组件（通过render传递渲染方式，editorProps传递属性）&lt;/span&gt;" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fontSize=20;" vertex="1" parent="1">
+                    <mxGeometry x="-230" y="70" width="240" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

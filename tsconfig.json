@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es2022",
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "jsx": "preserve",
+        "paths": {
+            "@lowcode512/*":[
+                "./packages/*/src/"
+            ]
+        }
+    },
+}
