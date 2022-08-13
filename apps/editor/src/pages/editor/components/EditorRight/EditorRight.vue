@@ -1,7 +1,18 @@
 <template>
     <div class="editor-right">
-        <div v-if="projectStore.currentElement === undefined">点击任意元素</div>
-        <div v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)">loading</div>
+        <div v-if="projectStore.currentElement === undefined">
+        <p>页面名称</p>
+            <input
+                :value="projectStore.currentPage.name"
+                @input="onPageNameChange($event)"
+            />
+            <!-- TODO: 防抖 -->
+        </div>
+        <div
+            v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)"
+        >
+            loading
+        </div>
         <div v-else>
             <div v-for="key in Object.keys(editorProps)" :key="key">
                 <input
@@ -11,7 +22,7 @@
                 />
                 <input
                     v-if="editorProps[key].type === 'number'"
-                    :value="editorProps[key].defaultValue"
+                    :value="editorProps[key].defaultValue"  
                     @change="onPropsChange($event, key)"
                     type="number"
                 />
@@ -38,16 +49,20 @@ const editorProps = computed(() => {
     }
     return getMaterialEditorProps(materialMap[projectStore.currentElement.mId]);
 });
-const elementProps = computed(() => {
-    if (!projectStore.currentElement) {
-        return {};
-    }
-    return projectStore.currentElement.props;
-});
+// const elementProps = computed(() => {
+//     if (!projectStore.currentElement) {
+//         return {};
+//     }
+//     return projectStore.currentElement.props;
+// });
 function onPropsChange(e: Event, key: string) {
     projectStore.changeElementProps({
         [key]: (e.target as HTMLInputElement).value,
     });
+}
+
+function onPageNameChange(e: Event) {
+    projectStore.changePageName((e.target as HTMLInputElement).value);
 }
 </script>
 

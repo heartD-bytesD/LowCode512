@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { IProject, Project, PageElement, IMaterial } from "@lowcode512/shared";
+import { IProject, Project, PageElement, IMaterial, Page } from "@lowcode512/shared";
 import {loadMaterial} from '@/utils'
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
 import app from '@/app'
@@ -87,16 +87,39 @@ export const useProjectStore = defineStore("project", () => {
         localStorage.setItem('__project', JSON.stringify(p.getJson()));
     }
 
+    function setCurrentPageIndex(index: number) {
+        currentPageIndex.value = index;
+        currentElementId.value = undefined; // 每次切换页面，清空选中，可以根据需要配置
+    }
+
+    function addPage() {
+        const page = Page.create();
+        p.addPage(page);
+        project.value = p.getJson();
+    }
+
+    function changePageName(name: string) {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        page.name = name; 
+        project.value = p.getJson();
+
+    }
+
     return {
         currentPage,
+        currentPageIndex,
         currentPageElements,
         currentElement,
+        currentElementId,
         project,
 
         addElement,
         setCurrentElement,
         changeElementProps,
         changeElementStyle,
+        addPage,
+        changePageName,
+        setCurrentPageIndex,
 
         load,
         isLoaded,
