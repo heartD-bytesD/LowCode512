@@ -51,14 +51,15 @@
         }
     }
     &-elements {
-        width: 140px;
+        width: 240px;
         
         .element {
-            width: 140px;
             display: flex;
             align-items: center; 
             justify-content: center;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
             &.active {
                 color: #f00;
                 cursor: auto;

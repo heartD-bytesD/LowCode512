@@ -5,7 +5,7 @@ import {loadMaterial} from '@/utils'
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
 import app from '@/app'
 
-const p = Project.create();
+export const p = Project.create();
 
 export const useProjectStore = defineStore("project", () => {
     const materials = ref<Record<string, IMaterial>>({})

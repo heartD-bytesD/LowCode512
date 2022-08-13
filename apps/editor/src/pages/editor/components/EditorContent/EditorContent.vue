@@ -1,3 +1,6 @@
+<!-- TODOs -->
+<!-- 1. [BUG]组件放大时会超出画布 -->
+
 <template>
     <div class="editor-content">
         <div class="editor-content-header">
@@ -38,13 +41,14 @@
                     <VueDragResize
                         @click="projectStore.setCurrentElement(item)"
                         :active="projectStore.currentElement?.id === item.id"
-                        @drag-end="onDragEnd"
+                        @dragging="onDragEnd"
                         :x="item.style.left || 0"
                         :y="item.style.top || 0"
-                        @resize-end="onDragEnd"
+                        @resizing="onDragEnd"
                         :width="item.style.width"
                         :height="item.style.height"
                         :rotatable="false"
+                        :immediate="true"
                     >
                         <component
                             v-if="projectStore.isLoaded(item.mId)"
