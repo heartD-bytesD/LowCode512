@@ -6,16 +6,26 @@ import { p } from "./project";
 export const useEventStore = defineStore("event", () => {
     const currentType = ref<string>(editorEvents[0].type);
     const currentEvents = computed(
-        () =>
-            editorEvents.find((item) => item.type === currentType.value).events
+        () =>{
+            console.dir(editorEvents.find((item) => item.type === currentType.value).events)
+            return editorEvents.find((item) => item.type === currentType.value).events
+        }
+            
     );
 
     const currentEventType = ref<string>(currentEvents.value[0].name);
     const currentEventArgs = computed(
         () =>
-            currentEvents.value.find(
+        {
+            const events = currentEvents.value.find(
                 (item) => item.name === currentEventType.value
-            ).args
+            );
+            if(events) {
+                return events.args
+            }
+            return undefined
+        }
+
     );
 
     const currentEventArgValues = ref<any[]>([]);
@@ -29,7 +39,6 @@ export const useEventStore = defineStore("event", () => {
         if (!props.events) {
             props.events = {};
         }
-        console.log(currentEventArgs.value);
         props.events[`${currentType.value}:${currentEventType.value}`] = [
             ...currentEventArgValues.value,
         ];
