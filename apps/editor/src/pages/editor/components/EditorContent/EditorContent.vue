@@ -6,6 +6,7 @@
         <div class="editor-content-header">
             <button @click="onSave">保存</button>
             <button @click="onPreview">预览</button>
+          <button @click="onReset">重置</button>
         </div>
         <div class="editor-body">
             <div class="editor-body-pages">
@@ -85,6 +86,10 @@ onMounted(() => {
         pageHeight = pageRef.value.offsetHeight;
     }
 });
+
+function onReset(){
+  projectStore.resetProject();
+}
 
 function onDragEnd(ev: any) {
     const { x, y, ...reset } = ev;

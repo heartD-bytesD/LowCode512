@@ -14,15 +14,18 @@
 .editor-body {
     display: flex;
     height: 100%;
+    border: 5px;
+    font-family: Consolas;
 
     &-pages {
         display: flex;
         flex-direction: column;
-        width: 160px;
+        width: auto;
         height: 100%;
+        border: 1px groove black;
 
         .page {
-            width: 140px;
+            width: auto;
             height: 200px;
             border: 1px solid #eee;
             display: flex;
@@ -38,7 +41,6 @@
         }
 
 
-
         .add {
             width: 140px;
             height: 40px;
@@ -51,17 +53,21 @@
         }
     }
     &-elements {
-        width: 240px;
+        width: 10%;
+        padding: 5px;
         
         .element {
+            margin: 2px;
             display: flex;
             align-items: center; 
             justify-content: center;
             cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10%;
             &.active {
-                color: #f00;
+                background: rgba(66, 204, 255, 0.3);
                 cursor: auto;
                 user-select: none;
             }
@@ -70,9 +76,10 @@
     &-page {
         position: relative;
         margin: 20px auto;
-        width: 375px;
+        width: 500px;
         height: 667px;
         box-sizing: border-box;
         border: 1px solid #eee;
+        display: flex;
     }
 }
