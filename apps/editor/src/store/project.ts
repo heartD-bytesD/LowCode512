@@ -4,10 +4,24 @@ import { IProject, Project, PageElement, IMaterial, Page } from "@lowcode512/sha
 import {loadMaterial} from '@/utils'
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
 import app from '@/app'
+import {router} from "@/router";
 
-export const p = Project.create();
+const LOCAL_STORAGE_PROJECT = "__project"
+
+// read saved Project if having one
+export let p = computed(() => {
+    // JSON.parse(localStorage.getItem("__project") || "{}");
+    let pJson = localStorage.getItem(LOCAL_STORAGE_PROJECT)
+    if(!pJson){
+        console.info("没有已保存的项目数据")
+        return Project.create()
+    }
+    console.info(`读取到已保存的项目数据: ${pJson}`)
+    return Project.create(JSON.parse(pJson))
+}).value as Project;
 
 export const useProjectStore = defineStore("project", () => {
+
     const materials = ref<Record<string, IMaterial>>({})
     const project = ref<IProject>(p.getJson());
     const currentPageIndex = ref(0);
@@ -83,8 +97,25 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
+    function _saveProject(content){
+        localStorage.setItem(LOCAL_STORAGE_PROJECT, content);
+    }
+
     function saveProject() {
-        localStorage.setItem('__project', JSON.stringify(p.getJson()));
+        _saveProject(JSON.stringify(p.getJson()))
+    }
+
+    function resetProject() {
+        p = project.value = Project.create()
+        saveProject()
+        // sorry for doing that, but i don't really understand the structure for now
+        // so i choose this way to refresh page
+        // router.push("/").then( () => {
+        //         setTimeout(() => {
+        //             router.push("/editor")
+        //         }, 200)
+        //     }
+        // )
     }
 
     function setCurrentPageIndex(index: number) {
@@ -125,5 +156,6 @@ export const useProjectStore = defineStore("project", () => {
         isLoaded,
 
         saveProject,
+        resetProject
     };
 });
