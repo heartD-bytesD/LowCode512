@@ -2,60 +2,42 @@
 <!-- 1. [BUG]组件放大时会超出画布 -->
 
 <template>
+<!-- 之后把 editor-header 抽离为一个组件 -->
+    <div class="editor-content-header">
+        <a-button type="outline">前进</a-button>
+        <a-button type="outline">后退</a-button>
+        <a-button type="outline" @click="onSave">保存</a-button>
+        <a-button type="outline" @click="onPreview">预览</a-button>
+        <a-button type="outline" @click="onReset">重置</a-button>
+    </div>
     <div class="editor-content">
-        <div class="editor-content-header">
-            <button @click="onSave">保存</button>
-            <button @click="onPreview">预览</button>
-          <button @click="onReset">重置</button>
-        </div>
         <div class="editor-body">
             <div class="editor-body-pages">
-                <div
-                    v-for="(item, index) in projectStore.project.pages"
-                    :key="index"
-                    class="page"
-                    :class="{ active: projectStore.currentPageIndex === index }"
-                    @click="onPageClick(index)"
-                >
+                <div v-for="(item, index) in projectStore.project.pages" :key="index" class="page"
+                    :class="{ active: projectStore.currentPageIndex === index }" @click="onPageClick(index)">
                     {{ item.name }}
                 </div>
                 <div class="add" @click="onPageAdd">添加页面</div>
             </div>
+
+            <!-- 添加网格  -->
+            <Grid />
             <div class="editor-body-elements">
-                <div
-                    class="element"
-                    :class="{
-                        active: projectStore.currentElementId === item.id,
-                    }"
-                    v-for="(item, index) in projectStore.currentPage.elements"
-                    :key="item.id"
-                    @click="onElementClick(item)"
-                >
+                <div class="element" :class="{
+                    active: projectStore.currentElementId === item.id,
+                }" v-for="(item, index) in projectStore.currentPage.elements" :key="item.id"
+                    @click="onElementClick(item)">
                     {{ item.name }}
                 </div>
             </div>
             <div class="editor-body-page" ref="pageRef">
-                <div
-                    v-for="item in projectStore.currentPageElements"
-                    :key="item.id"
-                >
-                    <VueDragResize
-                        @click="projectStore.setCurrentElement(item)"
-                        :active="projectStore.currentElement?.id === item.id"
-                        @dragging="onDragEnd"
-                        :x="item.style.left || 0"
-                        :y="item.style.top || 0"
-                        @resizing="onDragEnd"
-                        :width="item.style.width"
-                        :height="item.style.height"
-                        :rotatable="false"
-                        :immediate="true"
-                    >
-                        <component
-                            v-if="projectStore.isLoaded(item.mId)"
-                            :is="materialMap[item.mId].name"
-                            v-bind="item.props"
-                        ></component>
+                <div v-for="item in projectStore.currentPageElements" :key="item.id">
+                    <VueDragResize @click="projectStore.setCurrentElement(item)"
+                        :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd"
+                        :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd"
+                        :width="item.style.width" :height="item.style.height" :rotatable="false" :immediate="true">
+                        <component v-if="projectStore.isLoaded(item.mId)" :is="materialMap[item.mId].name"
+                            v-bind="item.props"></component>
                         <div v-else>loading</div>
                     </VueDragResize>
                 </div>
@@ -73,7 +55,7 @@ import VueDragResize from "vue-drag-resize-next";
 import "vue-drag-resize-next/lib/style.css";
 import { useRouter } from "vue-router";
 import "./EditorContent.less";
-
+import Grid from "../Grid/index.vue"
 const projectStore = useProjectStore();
 const route = useRouter();
 const pageRef = ref<HTMLElement>();
@@ -87,8 +69,8 @@ onMounted(() => {
     }
 });
 
-function onReset(){
-  projectStore.resetProject();
+function onReset() {
+    projectStore.resetProject();
 }
 
 function onDragEnd(ev: any) {
@@ -123,4 +105,3 @@ function onElementClick(ele: IElement) {
 }
 </script>
 
-<style scoped></style>
