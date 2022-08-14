@@ -21,7 +21,7 @@ export function loadScript(src: string) {
 }
 
 export async function loadMaterial(m: IMaterial) {
-    await delay(2000);
+    await delay(1000);
     return loadScript(m.source);
 }
 

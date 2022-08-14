@@ -10,7 +10,6 @@
 
 ```
 iwr https://get.pnpm.io/install.ps1 -useb | iex
-
 ```
 
 进入根目录安装工具依赖

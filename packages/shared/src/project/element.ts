@@ -11,6 +11,8 @@ export interface IElement {
     style: IElementStyle;
     // 属性
     props: Record<string, any>;
+    // 事件
+    events?: Record<string, any[]>;
 }
 
 export interface IElementStyle {
@@ -31,6 +33,7 @@ export class PageElement implements IElement{
             element.mVersion = e.mVersion;
             element.style = e.style;
             element.props = e.props || {};
+            element.events = e.events || {};
         }
         return element;
     }
@@ -42,6 +45,7 @@ export class PageElement implements IElement{
     public style: IElementStyle = {
     };
     public props: Record<string, any> = {};
+    public events: Record<string, any[]> = {};
 
     constructor() {
 
@@ -54,6 +58,7 @@ export class PageElement implements IElement{
             mVersion: this.mVersion,
             style: this.style,
             props: this.props,
+            events: this.events,
         };
     }
 }

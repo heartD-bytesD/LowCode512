@@ -1,7 +1,18 @@
 <template>
     <div class="editor-right">
-        <div v-if="projectStore.currentElement === undefined">点击任意元素</div>
-        <div v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)">loading</div>
+        <div v-if="projectStore.currentElement === undefined">
+            <p>页面名称</p>
+            <input
+                :value="projectStore.currentPage.name"
+                @input="onPageNameChange($event)"
+            />
+            <!-- TODO: 防抖 -->
+        </div>
+        <div
+            v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)"
+        >
+            loading
+        </div>
         <div v-else>
             <div v-for="key in Object.keys(editorProps)" :key="key">
                 <input
@@ -20,6 +31,39 @@
                     :value="editorProps[key].defaultValue"
                     @change="onPropsChange($event, key)"
                 />
+                <div>
+                    <select
+                        :value="eventStore.currentType"
+                        @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
+                    >
+                        <option
+                            v-for="item in eventStore.editorEvents"
+                            :key="item.type"
+                        >
+                            {{ item.type }}
+                        </option>
+                    </select>
+                    <select>
+                        <option
+                            v-for="item in eventStore.currentEvents"
+                            :key="item.name"
+                        >
+                            {{ item.name }}
+                        </option>
+                    </select>
+                    <div v-if="eventStore.currentEventArgs">
+                        <div
+                            v-for="(item, index) in eventStore.currentEventArgs"
+                            :key="index"
+                        >
+                            <input
+                                v-if="item.type === 'string'"
+                                @input="onEventArgsChange($event, index)"
+                            />
+                        </div>
+                    </div>
+                    <button @click="onEventSave">保存</button>
+                </div>
             </div>
         </div>
     </div>
@@ -28,8 +72,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { getMaterialEditorProps, materialMap } from "@/data";
-import { useProjectStore } from "@/store";
+import { useProjectStore, useEventStore } from "@/store";
 import "./EditorRight.less";
+
+const eventStore = useEventStore();
 
 const projectStore = useProjectStore();
 const editorProps = computed(() => {
@@ -38,16 +84,33 @@ const editorProps = computed(() => {
     }
     return getMaterialEditorProps(materialMap[projectStore.currentElement.mId]);
 });
-const elementProps = computed(() => {
-    if (!projectStore.currentElement) {
-        return {};
-    }
-    return projectStore.currentElement.props;
-});
+// const elementProps = computed(() => {
+//     if (!projectStore.currentElement) {
+//         return {};
+//     }
+//     return projectStore.currentElement.props;
+// });
 function onPropsChange(e: Event, key: string) {
     projectStore.changeElementProps({
         [key]: (e.target as HTMLInputElement).value,
     });
+}
+
+function onPageNameChange(e: Event) {
+    projectStore.changePageName((e.target as HTMLInputElement).value);
+}
+
+function onEventSave() {
+    eventStore.saveEvent(
+        projectStore.currentPageIndex,
+        projectStore.currentElementId
+    );
+}
+
+function onEventArgsChange(e: Event, index: number) {
+    const ev = e.target as HTMLInputElement;
+    console.log(ev.value, index);
+    eventStore.saveArgs(ev.value, index);
 }
 </script>
 
