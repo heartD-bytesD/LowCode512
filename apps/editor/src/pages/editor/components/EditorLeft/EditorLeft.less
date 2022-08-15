@@ -13,30 +13,41 @@
 //     cursor:pointer;
 // }
 
-
 .editor-left {
-    height: 65%;
-    padding: 10px;
-    display: grid;
-    grid-gap: 10px 19px;
-    grid-template-columns: repeat(auto-fill, 80px);
-    grid-template-rows: repeat(auto-fill, 40px);
+    &-materials {
+        height: 65%;
+        padding: 10px;
+        display: grid;
+        grid-gap: 10px 19px;
+        grid-template-columns: repeat(auto-fill, 80px);
+        grid-template-rows: repeat(auto-fill, 40px);
 
+        .material {
+            width: 80px;
+            height: 40px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            text-align: center;
+            color: #333;
+            padding: 2px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .material {
-        width: 80px;
-        height: 40px;
-        border: 1px solid #ddd;
-        cursor: pointer;
-        text-align: center;
-        color: #333;
-        padding: 2px 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;  
+        // &:active {
+        //     cursor: grabbing;
+        // }
+    }
+    &-pages {
+        border: 1px groove #eee;
+        box-sizing: border-box;
+        overflow-y: auto;
     }
 
-    // &:active {
-    //     cursor: grabbing;
-    // }
+    &-elements {
+        border: 1px groove #eee;
+        overflow: auto;
+        box-sizing: border-box;
+    }
 }
