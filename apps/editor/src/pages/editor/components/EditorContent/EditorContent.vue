@@ -2,14 +2,7 @@
 <!-- 1. [BUG]组件放大时会超出画布 -->
 
 <template>
-<!-- 之后把 editor-header 抽离为一个组件 -->
-    <div class="editor-content-header">
-        <a-button type="outline">前进</a-button>
-        <a-button type="outline">后退</a-button>
-        <a-button type="outline" @click="onSave">保存</a-button>
-        <a-button type="outline" @click="onPreview">预览</a-button>
-        <a-button type="outline" @click="onReset">重置</a-button>
-    </div>
+    <EditorHeaderVue />
     <div class="editor-content">
         <div class="editor-body">
             <!-- <div class="editor-body-pages">
@@ -31,8 +24,8 @@
             </div> -->
 
             <div class="editor-body-page" ref="pageRef">
-                        <!-- 添加网格  -->
-            <Grid />
+                <!-- 添加网格  -->
+                <Grid />
                 <div v-for="item in projectStore.currentPageElements" :key="item.id">
                     <VueDragResize @click="projectStore.setCurrentElement(item)"
                         :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd"
@@ -53,16 +46,14 @@ import { ref, onMounted } from "vue";
 import { useProjectStore } from "@/store";
 import { getMaterialRenderFun, materialMap } from "@/data";
 import VueDragResize from "vue-drag-resize-next";
-import { useRouter } from "vue-router";
 import app from '@/app'
 
 import "vue-drag-resize-next/lib/style.css";
 import "./EditorContent.less";
 
 import Grid from "../Grid/index.vue"
-
+import EditorHeaderVue from "../EditorHeader/EditorHeader.vue";
 const projectStore = useProjectStore();
-const route = useRouter();
 const pageRef = ref<HTMLElement>();
 let pageWidth = 0;
 let pageHeight = 0;
@@ -83,9 +74,6 @@ onMounted(() => {
         });
 });
 
-function onReset() {
-    projectStore.resetProject();
-}
 
 function onDragEnd(ev: any) {
     const { x, y, ...reset } = ev;
@@ -98,12 +86,5 @@ function onDragEnd(ev: any) {
     });
 }
 
-function onSave() {
-    projectStore.saveProject();
-}
-
-function onPreview() {
-    route.push("/preview");
-}
 </script>
 
