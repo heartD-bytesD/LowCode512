@@ -20,8 +20,7 @@
                 <div class="add" @click="onPageAdd">添加页面</div>
             </div>
 
-            <!-- 添加网格  -->
-            <Grid />
+
             <div class="editor-body-elements">
                 <div class="element" :class="{
                     active: projectStore.currentElementId === item.id,
@@ -31,6 +30,8 @@
                 </div>
             </div>
             <div class="editor-body-page" ref="pageRef">
+                        <!-- 添加网格  -->
+            <Grid />
                 <div v-for="item in projectStore.currentPageElements" :key="item.id">
                     <VueDragResize @click="projectStore.setCurrentElement(item)"
                         :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd"
