@@ -1,0 +1,21 @@
+.editor-elements {
+    padding: 5px;
+    font-family: Consolas;
+    
+    .element {
+        margin: 2px;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10%;
+        &.active {
+            background: rgba(66, 204, 255, 0.3);
+            cursor: auto;
+            user-select: none;
+        }
+    }
+}

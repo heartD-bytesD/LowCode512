@@ -1,0 +1,38 @@
+.editor-pages {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 100%;
+    border: 1px groove black;
+    font-family: Consolas;
+    align-items: center;
+    justify-content: center;
+
+    .page { 
+        width: 140px;
+        height: 200px;
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        cursor: pointer;
+        &.active {
+            border-color: #f00;
+            cursor: auto;
+            user-select: none;
+        }
+    }
+
+
+    .add {
+        width: 140px;
+        height: 40px;
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        cursor: pointer;
+    }
+}

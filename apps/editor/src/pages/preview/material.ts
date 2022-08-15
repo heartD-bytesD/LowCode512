@@ -9,7 +9,7 @@ export function useMaterial() {
         localStorage.getItem("__project") || "{}"
     );
     const materials = project.pages[0].elements.map(item => 
-        materialMap[item.mId]
+        materialMap[item.mId] // 通过mId得到物料
     )
     const loading = ref(false);
     onMounted(() => {
