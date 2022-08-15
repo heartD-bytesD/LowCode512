@@ -2,14 +2,8 @@
 <!-- 1. [BUG]组件放大时会超出画布 -->
 
 <template>
-<!-- 之后把 editor-header 抽离为一个组件 -->
-    <div class="editor-content-header">
-        <a-button type="outline">前进</a-button>
-        <a-button type="outline">后退</a-button>
-        <a-button type="outline" @click="onSave">保存</a-button>
-        <a-button type="outline" @click="onPreview">预览</a-button>
-        <a-button type="outline" @click="onReset">重置</a-button>
-    </div>
+    <!-- header -->
+    <EditorHeaderVue />
     <div class="editor-content">
         <div class="editor-body">
             <div class="editor-body-pages">
@@ -54,11 +48,10 @@ import { materialMap } from "@/data";
 import { IElement } from "@lowcode512/shared";
 import VueDragResize from "vue-drag-resize-next";
 import "vue-drag-resize-next/lib/style.css";
-import { useRouter } from "vue-router";
 import "./EditorContent.less";
 import Grid from "../Grid/index.vue"
+import EditorHeaderVue from "../EditorHeader/EditorHeader.vue";
 const projectStore = useProjectStore();
-const route = useRouter();
 const pageRef = ref<HTMLElement>();
 let pageWidth = 0;
 let pageHeight = 0;
@@ -70,10 +63,6 @@ onMounted(() => {
     }
 });
 
-function onReset() {
-    projectStore.resetProject();
-}
-
 function onDragEnd(ev: any) {
     const { x, y, ...reset } = ev;
     const left = Math.min(Math.max(x, 0), pageWidth - reset.width);
@@ -83,14 +72,6 @@ function onDragEnd(ev: any) {
         top,
         ...reset,
     });
-}
-
-function onSave() {
-    projectStore.saveProject();
-}
-
-function onPreview() {
-    route.push("/preview");
 }
 
 function onPageAdd() {
