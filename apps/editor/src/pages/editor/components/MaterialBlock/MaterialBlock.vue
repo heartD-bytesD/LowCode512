@@ -1,6 +1,6 @@
 <template>
     <div class="material-block">
-    {{title}}
+     <span >{{title}}</span>
     </div>
 </template>
 

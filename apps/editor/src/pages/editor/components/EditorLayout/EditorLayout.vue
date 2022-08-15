@@ -5,16 +5,17 @@ import EditorRight from '../EditorRight/EditorRight.vue';
 import EditorContent from '../EditorContent/EditorContent.vue';
 </script>
 <template>
-<div class="editor-layout">
-    <div class="editor-layout-left">
-        <EditorLeft/>
-    </div>
-    <div class="editor-layout-content">
-        <EditorContent/>
-    </div>
-    <div class="editor-layout-right">
-        <EditorRight/>
-    </div>
-</div>
-
+    <a-layout class="editor-layout">
+        <a-layout>
+            <a-layout-sider >
+                <EditorLeft />
+            </a-layout-sider>
+            <a-layout-content class="editor-content">
+                <EditorContent />
+            </a-layout-content>
+            <a-layout-sider>
+                <EditorRight />
+            </a-layout-sider>
+        </a-layout>
+    </a-layout>
 </template>
