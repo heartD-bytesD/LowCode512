@@ -56,6 +56,9 @@ export const useProjectStore = defineStore("project", () => {
     }
 
     function changeElementProps(props: Record<string, any>) {
+        if(!currentElement.value) {
+            return;
+        }
         const element = p
             .getPageByIndex(currentPageIndex.value)
             .getElementById(currentElement.value.id);
