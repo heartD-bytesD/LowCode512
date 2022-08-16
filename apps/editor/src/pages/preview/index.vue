@@ -3,7 +3,7 @@
         <div v-if="loading">loading...</div>
         <div
             v-else
-            v-for="item in pages[0].elements"
+            v-for="item in page.elements"
             :key="item.id"
             :style="{
                 position: 'absolute',
@@ -22,15 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { IProject } from "@lowcode512/shared";
 import { materialMap } from "@/data";
-import { useMaterial } from "./material";
 import "./index.less";
+import {useProjectStore} from "@/store";
 
-const { loading, pages } = useMaterial();
-
-const project: IProject = JSON.parse(localStorage.getItem("__project") || "{}");
-console.log(project);
+const project = useProjectStore()
+const page = project.currentPage
 </script>
 
 <style scoped></style>
