@@ -113,16 +113,11 @@ export const useProjectStore = defineStore("project", () => {
     }
 
     function resetProject() {
+        const check = confirm("确定全部清空吗?")
+        if(!check){
+            return
+        }
         p = project.value = Project.create()
-        saveProject()
-        // sorry for doing that, but i don't really understand the structure for now
-        // so i choose this way to refresh page
-        // router.push("/").then( () => {
-        //         setTimeout(() => {
-        //             router.push("/editor")
-        //         }, 200)
-        //     }
-        // )
     }
 
     function setCurrentPageIndex(index: number) {
