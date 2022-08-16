@@ -4,8 +4,8 @@
 <template>
 <!-- 之后把 editor-header 抽离为一个组件 -->
     <div class="editor-content-header">
-        <a-button type="outline">前进</a-button>
-        <a-button type="outline">后退</a-button>
+        <a-button type="outline" @click="onRedo">前进</a-button>
+        <a-button type="outline" @click="onUndo">后退</a-button>
         <a-button type="outline" @click="onSave">保存</a-button>
         <a-button type="outline" @click="onPreview">预览</a-button>
         <a-button type="outline" @click="onReset">重置</a-button>
@@ -33,10 +33,10 @@
             <div class="editor-body-page" ref="pageRef">
                         <!-- 添加网格  -->
             <Grid />
-                <div v-for="item in projectStore.currentPageElements" :key="item.id">
+                <div v-for="item in projectStore.currentPageElements" :key="item.id" >
                     <VueDragResize @click="projectStore.setCurrentElement(item)"
-                        :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd"
-                        :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd"
+                        :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd" @drag-end="onSaveSnapshot"
+                        :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd" @resize-end="onSaveSnapshot"
                         :width="item.style.width" :height="item.style.height" :rotatable="false" :immediate="true">
                         <component v-if="projectStore.isLoaded(item.mId)" :is="materialMap[item.mId].name"
                             v-bind="item.props"></component>
@@ -105,5 +105,21 @@ function onSave() {
 function onPreview() {
     route.push("/preview");
 }
+
+function onUndo() {
+    console.log("Undo")
+    projectStore.undo()
+}
+
+function onRedo() {
+    console.log("Redo")
+    projectStore.redo()
+}
+
+function onSaveSnapshot() {
+    console.log("Add snapshot:", projectStore.currentPage)
+    projectStore.saveSnapshot()
+}
+
 </script>
 
