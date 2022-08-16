@@ -51,6 +51,9 @@ importers:
     devDependencies:
       '@arco-design/web-vue': 2.35.0_vue@3.2.37
 
+  packages/button:
+    specifiers: {}
+
   packages/image:
     specifiers: {}
 

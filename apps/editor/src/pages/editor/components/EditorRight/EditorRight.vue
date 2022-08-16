@@ -15,6 +15,9 @@
         </div>
         <div v-else>
             <div v-for="key in Object.keys(editorProps)" :key="key">
+                <p v-if="editorProps[key].display" class="display">
+                    {{ editorProps[key].display }}
+                </p>
                 <input
                     v-if="editorProps[key].type === 'string'"
                     :value="editorProps[key].defaultValue"
@@ -31,39 +34,42 @@
                     :value="editorProps[key].defaultValue"
                     @change="onPropsChange($event, key)"
                 />
-                <div>
-                    <select
-                        :value="eventStore.currentType"
-                        @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
+            </div>
+            <div>
+                <p class="display">
+                    自定义事件
+                </p>
+                <select
+                    :value="eventStore.currentType"
+                    @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
+                >
+                    <option
+                        v-for="item in eventStore.editorEvents"
+                        :key="item.type"
                     >
-                        <option
-                            v-for="item in eventStore.editorEvents"
-                            :key="item.type"
-                        >
-                            {{ item.type }}
-                        </option>
-                    </select>
-                    <select>
-                        <option
-                            v-for="item in eventStore.currentEvents"
-                            :key="item.name"
-                        >
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <div v-if="eventStore.currentEventArgs">
-                        <div
-                            v-for="(item, index) in eventStore.currentEventArgs"
-                            :key="index"
-                        >
-                            <input
-                                v-if="item.type === 'string'"
-                                @input="onEventArgsChange($event, index)"
-                            />
-                        </div>
+                        {{ item.type }}
+                    </option>
+                </select>
+                <select>
+                    <option
+                        v-for="item in eventStore.currentEvents"
+                        :key="item.name"
+                    >
+                        {{ item.name }}
+                    </option>
+                </select>
+                <div v-if="eventStore.currentEventArgs">
+                    <div
+                        v-for="(item, index) in eventStore.currentEventArgs"
+                        :key="index"
+                    >
+                        <input
+                            v-if="item.type === 'string'"
+                            @input="onEventArgsChange($event, index)"
+                        />
                     </div>
-                    <button @click="onEventSave">保存</button>
                 </div>
+                <button @click="onEventSave">保存</button>
             </div>
         </div>
     </div>

@@ -37,6 +37,24 @@ export const materialList: IMaterial[] = [
             },
         ],
     },
+    {
+        id: 3,
+        type: "component",
+        category: {
+            name: "基础组件",
+        },
+        name: "LcButton",
+        title: "按钮",
+        thumbnail: "",
+        version: "0.0.1",
+        source: "/lc-button.0.0.1.umd.js",
+        data: [
+            {
+                version: "0.0.1",
+                source: "/lc-button.0.0.1.umd.js",
+            },
+        ],
+    },
 ];
 
 export const materialMap: { [key: string]: IMaterial } = materialList.reduce(
