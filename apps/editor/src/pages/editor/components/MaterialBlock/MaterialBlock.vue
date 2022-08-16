@@ -1,7 +1,7 @@
 <template>
-    <div class="material-block">
+    <a-button type="text" class="material-block">
      <span >{{title}}</span>
-    </div>
+    </a-button>
 </template>
 
 <script setup lang="ts">

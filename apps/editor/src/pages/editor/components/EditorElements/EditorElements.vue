@@ -12,8 +12,9 @@ function onElementClick(ele: IElement) {
 
 <template>
     <div class="editor-elements">
-        <div
+        <a-button
             class="element"
+            type="dashed" long
             :class="{
                 active: projectStore.currentElementId === item.id,
             }"
@@ -22,7 +23,7 @@ function onElementClick(ele: IElement) {
             @click="onElementClick(item)"
         >
             {{ item.name }}
-        </div>
+        </a-button>
     </div>
 </template>
 

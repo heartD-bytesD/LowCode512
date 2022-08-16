@@ -24,7 +24,7 @@ function onPageClick(index: number) {
         >
             {{ item.name }}
         </div>
-        <div class="add" @click="onPageAdd">添加页面</div>
+        <a-button type="text" class="add" @click="onPageAdd">添加页面</a-button>
     </div>
 </template>
 
