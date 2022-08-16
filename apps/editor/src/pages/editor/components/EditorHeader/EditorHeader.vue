@@ -18,13 +18,23 @@ function onReset() {
 }
 
 
+function onUndo() {
+    console.log("Undo")
+    projectStore.undo()
+}
+
+function onRedo() {
+    console.log("Redo")
+    projectStore.redo()
+}
+
 </script>
 
 
 <template>
     <div class="editor-content-header">
-        <a-button type="outline">后退</a-button>
-        <a-button type="outline">前进</a-button>
+        <a-button type="outline" @click="onUndo">后退</a-button>
+        <a-button type="outline" @click="onRedo">前进</a-button>
         <a-button type="outline" @click="onSave">保存</a-button>
         <a-button type="outline" @click="onPreview">预览</a-button>
         <a-button type="outline" @click="onReset">重置</a-button>

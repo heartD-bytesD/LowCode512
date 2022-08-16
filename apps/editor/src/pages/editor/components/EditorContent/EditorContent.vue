@@ -28,8 +28,8 @@
                 <Grid />
                 <div v-for="item in projectStore.currentPageElements" :key="item.id">
                     <VueDragResize @click="projectStore.setCurrentElement(item)"
-                        :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd"
-                        :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd"
+                        :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd" @drag-end="onSaveSnapshot"
+                        :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd" @resize-end="onSaveSnapshot"
                         :width="item.style.width" :height="item.style.height" :rotatable="false" :immediate="true">
                         <component v-if="projectStore.isLoaded(item.mId)" :is="materialMap[item.mId].name"
                             v-bind="item.props"></component>
@@ -84,6 +84,10 @@ function onDragEnd(ev: any) {
         top,
         ...reset,
     });
+}
+function onSaveSnapshot() {
+    console.log("Add snapshot:", projectStore.currentPage)
+    projectStore.saveSnapshot()
 }
 
 </script>

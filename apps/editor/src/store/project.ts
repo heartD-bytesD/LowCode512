@@ -43,6 +43,7 @@ export const useProjectStore = defineStore("project", () => {
             return currentPageElements[currentElementIndex.value]
         }
     );
+    const currentSnapshotIndex = ref(0);
 
     function setCurrentElement(element: PageElement) {
         currentElementId.value = element.id;
@@ -50,7 +51,10 @@ export const useProjectStore = defineStore("project", () => {
 
     function addElement(ele: PageElement) {
         currentElementId.value = ele.id;
-        p.getPageByIndex(currentPageIndex.value).addElement(ele);
+        const page = p.getPageByIndex(currentPageIndex.value)
+        page.addElement(ele);
+        console.log("Add element: ", page);
+        saveSnapshot()
         // p._pages[currentPageIndex.value].addElement(ele);
         project.value = p.getJson();
     }
@@ -139,6 +143,43 @@ export const useProjectStore = defineStore("project", () => {
 
     }
 
+    // For redo and undo
+    function saveSnapshot() {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        // if(currentSnapshotIndex.value != page.snapshots.length - 1) {
+        //     console.log("Removed")
+        //     page.snapshots = page.snapshots.slice(0, currentSnapshotIndex.value + 1)
+        //     // page.removeSnapshots(currentSnapshotIndex.value)
+        //     const c = page.snapshots[currentSnapshotIndex.value][0]?.style.left
+        //     console.log(c)
+        // }
+        page.saveSnapshot();
+        currentSnapshotIndex.value++;
+        project.value = p.getJson();
+    }
+
+    function undo() {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        if(--currentSnapshotIndex.value < 0) {
+            currentSnapshotIndex.value = 0
+        }
+        page.refreshElements(currentSnapshotIndex.value)
+        project.value = p.getJson();
+    }
+    function redo() {
+        const elementsLength: number = p.getPageByIndex(currentPageIndex.value).snapshots.length;
+        if(elementsLength == 0) {
+            return;
+        }
+        if(++currentSnapshotIndex.value >= elementsLength) {
+            currentSnapshotIndex.value = elementsLength - 1;
+        }
+        const page = p.getPageByIndex(currentPageIndex.value);
+        console.log("currentSnapshotIndex: ", currentSnapshotIndex.value)
+        page._elements = [...page.snapshots[currentSnapshotIndex.value]];
+        project.value = p.getJson();
+    }
+
     return {
         currentPage,
         currentPageIndex,
@@ -159,6 +200,10 @@ export const useProjectStore = defineStore("project", () => {
         isLoaded,
 
         saveProject,
-        resetProject
+        resetProject,
+
+        saveSnapshot,
+        undo,
+        redo,
     };
 });
