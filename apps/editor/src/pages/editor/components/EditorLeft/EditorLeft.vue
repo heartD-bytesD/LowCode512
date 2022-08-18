@@ -33,6 +33,7 @@ const onClick = (e: Event, m: IMaterial) => {
     ele.mVersion = m.version;
     ele.props = getMaterialDefaultProps(m)
     projectStore.addElement(ele);
+    projectStore.saveSnapshot();
     projectStore.load(m)
 }
 

@@ -7,7 +7,6 @@ export const useEventStore = defineStore("event", () => {
     const currentType = ref<string>(editorEvents[0].type);
     const currentEvents = computed(
         () =>{
-            console.dir(editorEvents.find((item) => item.type === currentType.value).events)
             return editorEvents.find((item) => item.type === currentType.value).events
         }
             

@@ -86,7 +86,6 @@ function onDragEnd(ev: any) {
     });
 }
 function onSaveSnapshot() {
-    console.log("Add snapshot:", projectStore.currentPage)
     projectStore.saveSnapshot()
 }
 
