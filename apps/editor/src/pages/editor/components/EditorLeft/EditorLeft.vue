@@ -28,7 +28,6 @@ import { PageElement } from "@lowcode512/shared";
 const projectStore = useProjectStore();
 
 const onClick = (e: Event, m: IMaterial) => {
-    console.log("click", m)
     const ele = PageElement.create();
     ele.mId = m.id;
     ele.mVersion = m.version;

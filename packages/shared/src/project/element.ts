@@ -24,11 +24,11 @@ export interface IElementStyle {
 }
 
 export class PageElement implements IElement{
-    public static create(e?: IElement) {
+    public static create(e?: IElement, copy: boolean = false) {
         const element = new PageElement();
         if(e) {
             element.name = e.name;
-            element.id = e.id;
+            element.id = copy ? uuid() : e.id;
             element.mId = e.mId;
             element.mVersion = e.mVersion;
             element.style = e.style;

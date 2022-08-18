@@ -36,7 +36,7 @@ interface IElementStyle {
     zIndex?: number;
 }
 declare class PageElement implements IElement {
-    static create(e?: IElement): PageElement;
+    static create(e?: IElement, copy?: boolean): PageElement;
     id: string;
     name: string;
     mId: number;

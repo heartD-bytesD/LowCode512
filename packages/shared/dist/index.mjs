@@ -13,11 +13,11 @@ class PageElement {
     this.props = {};
     this.events = {};
   }
-  static create(e) {
+  static create(e, copy = false) {
     const element = new PageElement();
     if (e) {
       element.name = e.name;
-      element.id = e.id;
+      element.id = copy ? uuid() : e.id;
       element.mId = e.mId;
       element.mVersion = e.mVersion;
       element.style = e.style;
@@ -68,7 +68,7 @@ class Page {
     this._elements.push(element);
   }
   removeElement(element) {
-    const index = this._elements.indexOf(element);
+    const index = this._elements.findIndex((e) => e.id === element.id);
     if (index >= 0) {
       this._elements.splice(index, 1);
     }

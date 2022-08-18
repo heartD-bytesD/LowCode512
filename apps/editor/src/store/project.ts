@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { computed, ref, reactive } from "vue";
 import { IProject, Project, PageElement, IMaterial, Page } from "@lowcode512/shared";
 import {loadMaterial} from '@/utils'
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
@@ -44,16 +44,21 @@ export const useProjectStore = defineStore("project", () => {
         }
     );
     const currentSnapshotIndex = ref(0);
+    // 复制，仅保存一次操作
+    const currentCopyStack = reactive({value: [
+        // 因Vue3的bug，这里多保存一层
+
+    ]})
 
     function setCurrentElement(element: PageElement) {
         currentElementId.value = element.id;
+        currentElementIndex.value = currentPageElements.value.findIndex(e => e.id === element.id)
     }
 
     function addElement(ele: PageElement) {
         currentElementId.value = ele.id;
         const page = p.getPageByIndex(currentPageIndex.value)
         page.addElement(ele);
-        console.log("Add element: ", page);
         saveSnapshot()
         // p._pages[currentPageIndex.value].addElement(ele);
         project.value = p.getJson();
@@ -179,6 +184,59 @@ export const useProjectStore = defineStore("project", () => {
         page._elements = [...page.snapshots[currentSnapshotIndex.value]];
         project.value = p.getJson();
     }
+    // Control the copy stack
+    function pushStack(element) {
+        currentCopyStack.value = [element];
+    }
+
+    function copyElement(differentId: boolean = true) {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        if(page == null || !currentElement.value) {
+            return;
+        }
+        const element = page.elements[currentElementIndex.value];
+        const copyElement = PageElement.create(element, differentId);
+        console.log(currentElement.value);
+        pushStack(copyElement);
+        console.log('currentCopyStack', currentCopyStack);
+    }
+
+    function pasteElement() {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        if(page == null || currentCopyStack.value.length === 0) {
+            return;
+        }
+        saveSnapshot();
+        // Continuously paste element, with different Id
+        page.addElement(PageElement.create(...currentCopyStack.value, true));
+        console.log(currentCopyStack.value)
+        // For multi-selected, just spread the array, needs 
+        setCurrentElement(currentCopyStack.value[0]);
+        project.value = p.getJson();
+    }
+
+    function removeElement() {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        if(page == null) {
+            return;
+        }
+        saveSnapshot();
+        page.removeElement(currentElement.value);
+        currentElementId.value = undefined;
+        project.value = p.getJson();
+    }
+    // BUG: 剪切的时候无元素stack里也一直有新元素
+    function cutElement() {
+        const page = p.getPageByIndex(currentPageIndex.value);
+        if(page == null || !currentElement.value) {
+            return;
+        }
+        copyElement(false);
+        saveSnapshot();
+        page.removeElement(currentElement.value);
+        currentElementId.value = undefined;
+        project.value = p.getJson();
+    }
 
     return {
         currentPage,
@@ -192,6 +250,11 @@ export const useProjectStore = defineStore("project", () => {
         setCurrentElement,
         changeElementProps,
         changeElementStyle,
+        copyElement,
+        pasteElement,
+        removeElement,
+        cutElement,
+
         addPage,
         changePageName,
         setCurrentPageIndex,

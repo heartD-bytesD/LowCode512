@@ -26,8 +26,8 @@
             <div class="editor-body-page" ref="pageRef">
                 <!-- 添加网格  -->
                 <Grid />
-                <div v-for="item in projectStore.currentPageElements" :key="item.id">
-                    <VueDragResize @click="projectStore.setCurrentElement(item)"
+                <div v-for="item in projectStore.currentPageElements" :key="item.id" class="element">
+                    <VueDragResize @mousedown="projectStore.setCurrentElement(item)"
                         :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd" @drag-end="onSaveSnapshot"
                         :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd" @resize-end="onSaveSnapshot"
                         :width="item.style.width" :height="item.style.height" :rotatable="false" :immediate="true">

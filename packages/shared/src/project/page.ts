@@ -43,7 +43,7 @@ export class Page implements IPage {
     }
 
     public removeElement(element: PageElement) {
-        const index = this._elements.indexOf(element);
+        const index = this._elements.findIndex(e => e.id === element.id)
         if (index >= 0) {
             this._elements.splice(index, 1);
         }
