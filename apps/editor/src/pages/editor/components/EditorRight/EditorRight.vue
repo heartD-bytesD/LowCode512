@@ -18,20 +18,22 @@
                 <p v-if="editorProps[key].display" class="display">
                     {{ editorProps[key].display }}
                 </p>
+                <!-- Changes: -->
+                <!-- editorProps[key].defaultValue => projectStore.currentElement.props[key]  -->
                 <input
                     v-if="editorProps[key].type === 'string'"
-                    :value="editorProps[key].defaultValue"
+                    :value="projectStore.currentElement.props[key]"
                     @change="onPropsChange($event, key)"
                 />
                 <input
                     v-if="editorProps[key].type === 'number'"
-                    :value="editorProps[key].defaultValue"
+                    :value="projectStore.currentElement.props[key]"
                     @change="onPropsChange($event, key)"
                     type="number"
                 />
                 <input
                     v-if="editorProps[key].type === 'color'"
-                    :value="editorProps[key].defaultValue"
+                    :value="projectStore.currentElement.props[key]"
                     @change="onPropsChange($event, key)"
                 />
             </div>

@@ -6,15 +6,18 @@ export default {
     editorProps: {
         title: {
             type: 'string',
-            defaultValue: '请输入文字' // 默认图的cdn
+            defaultValue: '请输入文字', // 默认图的cdn
+            display: '内容'
         },
         color: {
             type: 'color',
-            defaultValue: '#333'
+            defaultValue: '#333',
+            display: '颜色'
         },
         size: {
             type: 'number',
-            defaultValue: 16
+            defaultValue: 16,
+            display: '大小'
         }
     }
 };

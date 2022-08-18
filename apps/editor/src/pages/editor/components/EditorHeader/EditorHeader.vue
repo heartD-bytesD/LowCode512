@@ -17,15 +17,28 @@ function onReset() {
     projectStore.resetProject();
 }
 
-
 function onUndo() {
-    console.log("Undo")
     projectStore.undo()
 }
 
 function onRedo() {
-    console.log("Redo")
     projectStore.redo()
+}
+
+function onCopy() {
+    projectStore.copyElement();
+}
+
+function onPaste() {
+    projectStore.pasteElement();
+}
+
+function onRemove() {
+    projectStore.removeElement();
+}
+
+function onCut() {
+    projectStore.cutElement();
 }
 
 </script>
@@ -33,6 +46,10 @@ function onRedo() {
 
 <template>
     <div class="editor-content-header">
+        <a-button type="outline" @click="onCopy">复制</a-button>
+        <a-button type="outline" @click="onPaste">粘贴</a-button>
+        <a-button type="outline" @click="onCut">剪切</a-button>
+        <a-button type="outline" @click="onRemove" status='danger'>删除</a-button>
         <a-button type="outline" @click="onUndo">后退</a-button>
         <a-button type="outline" @click="onRedo">前进</a-button>
         <a-button type="outline" @click="onSave">保存</a-button>

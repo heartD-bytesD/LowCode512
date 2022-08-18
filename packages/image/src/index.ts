@@ -6,7 +6,8 @@ export default {
     editorProps: {
         src: {
             type: 'string',
-            defaultValue: 'https://picsum.photos/200' // 默认图的cdn
+            defaultValue: 'https://picsum.photos/200',
+            display: 'URL'
         }
     }
 };

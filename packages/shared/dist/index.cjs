@@ -17,11 +17,11 @@ class PageElement {
     this.props = {};
     this.events = {};
   }
-  static create(e) {
+  static create(e, differentId = false) {
     const element = new PageElement();
     if (e) {
       element.name = e.name;
-      element.id = e.id;
+      element.id = differentId ? uuid() : e.id;
       element.mId = e.mId;
       element.mVersion = e.mVersion;
       element.style = e.style;
@@ -47,7 +47,6 @@ class Page {
   constructor() {
     this.name = "New Page";
     this.description = "New Page Description";
-    this.snapshots = [[]];
     this._elements = [];
   }
   get elements() {
@@ -61,7 +60,6 @@ class Page {
       page._elements = p.elements.map(
         (element) => PageElement.create(element)
       );
-      page.snapshots = p.snapshots ? p.snapshots.map((elements) => [...elements]) : [[]];
     }
     return page;
   }
@@ -72,7 +70,7 @@ class Page {
     this._elements.push(element);
   }
   removeElement(element) {
-    const index = this._elements.indexOf(element);
+    const index = this._elements.findIndex((e) => e.id === element.id);
     if (index >= 0) {
       this._elements.splice(index, 1);
     }
@@ -80,29 +78,15 @@ class Page {
   insertElement(index, element) {
     this._elements.splice(index, 0, element);
   }
-  refreshElements(index) {
-    const newSnapshot = this.snapshots[index];
-    this._elements.splice(0, this._elements.length);
-    this._elements.push(...newSnapshot);
-  }
-  saveSnapshot() {
-    this.snapshots.push(this._elements.map((element) => PageElement.create(element)));
-  }
-  removeSnapshots(index) {
-    const snapshotsLength = this.snapshots.length;
-    console.log("Before remove snapshots", this.snapshots);
-    if (index >= snapshotsLength) {
-      return;
-    }
-    console.log("To be removed: ", index + 1, snapshotsLength - index - 1);
-    console.log("After remove snapshots: ", this.snapshots);
+  clearElements() {
+    this._elements.splice(0, this.elements.length);
+    console.log(this._elements);
   }
   getJson() {
     return {
       name: this.name,
       description: this.description,
-      elements: this.elements,
-      snapshots: this.snapshots
+      elements: this.elements
     };
   }
 }

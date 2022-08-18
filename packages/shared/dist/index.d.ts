@@ -36,7 +36,7 @@ interface IElementStyle {
     zIndex?: number;
 }
 declare class PageElement implements IElement {
-    static create(e?: IElement): PageElement;
+    static create(e?: IElement, differentId?: boolean): PageElement;
     id: string;
     name: string;
     mId: number;
@@ -52,12 +52,10 @@ interface IPage {
     name: string;
     description: string;
     elements: IElement[];
-    snapshots: Array<PageElement[]>;
 }
 declare class Page implements IPage {
     name: string;
     description: string;
-    snapshots: PageElement[][];
     private _elements;
     get elements(): IElement[];
     static create(p?: IPage): Page;
@@ -66,9 +64,7 @@ declare class Page implements IPage {
     addElement(element: PageElement): void;
     removeElement(element: PageElement): void;
     insertElement(index: number, element: PageElement): void;
-    refreshElements(index: number): void;
-    saveSnapshot(): void;
-    removeSnapshots(index: number): void;
+    clearElements(): void;
     getJson(): IPage;
 }
 
