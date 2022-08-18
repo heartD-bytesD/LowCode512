@@ -158,9 +158,7 @@ export const useProjectStore = defineStore("project", () => {
     function saveSnapshot() {
         if(currentSnapshotIndex.value < currentSnapshots.value.length - 1) {
             removeSnapshots(currentSnapshotIndex.value);
-            console.log("Removed");
         }
-        console.log("定位而已");
         currentSnapshots.value.push(
             currentPageElements.value.map((e) => PageElement.create(e, false))
         );
@@ -191,7 +189,6 @@ export const useProjectStore = defineStore("project", () => {
         currentSnapshotIndex.value--;
         page.clearElements();
         const snapshot = currentSnapshots.value[currentSnapshotIndex.value];
-        console.log(snapshot);
         snapshot.map((element) => page.addElement(PageElement.create(element)));
         project.value = p.getJson();
     }
@@ -222,9 +219,7 @@ export const useProjectStore = defineStore("project", () => {
         }
         const element = page.elements[currentElementIndex.value];
         const copyElement = PageElement.create(element, differentId);
-        console.log(currentPageElements.value);
         pushStack(copyElement);
-        console.log("currentPageElements.value", currentPageElements.value);
     }
 
     function pasteElement() {
@@ -234,9 +229,7 @@ export const useProjectStore = defineStore("project", () => {
         }
         saveSnapshot();
         // Continuously paste element, with different Id
-        console.log(page);
         page.addElement(PageElement.create(...currentCopyStack.value, true));
-        console.log(page)
         project.value = p.getJson();
         // For multi-selected, just spread the array
         setCurrentElement(currentPageElements.value[currentPageElements.value.length - 1]);
