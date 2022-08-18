@@ -166,15 +166,9 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
-    // Remove all snapshots after this index
+    // Maintain all snapshots before arr[index + 1];
     function removeSnapshots(index: number) {
         currentSnapshots.value = currentSnapshots.value.slice(0, index + 1);
-    }
-
-    function refreshElements(index: number) {
-        const newSnapshot: PageElement[] = currentSnapshots.value[index];
-        currentPageElements.value.splice(0, currentPageElements.value.length);
-        currentPageElements.value.push(...newSnapshot);
     }
 
     function undo() {
@@ -207,7 +201,7 @@ export const useProjectStore = defineStore("project", () => {
         snapshot.map((element) => page.addElement(PageElement.create(element)));
         project.value = p.getJson();
     }
-    // Control the copy stack
+    // Control the copy stack (just clear before push in fact).
     function pushStack(element) {
         currentCopyStack.value = [element];
     }
