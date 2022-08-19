@@ -1,10 +1,96 @@
 .editor-right{
     height: 100%;
-    background-color: #f5f5f5;
+    background-color: #fff;
     overflow-y: auto;
     border-left: 1px solid #e5e5e5;
     .display {
         margin: 10px;
         font-family: Consolas;
+    }
+
+    .pagesItem {
+        padding: 50px;
+        text-align: center;
+        font-family: Consolas;
+        color: rgb(var(--primary-6));
+        font-size: 16px;
+        border-bottom: 3px solid #e5e5e5;
+    }
+
+    .pageName {
+        font-size: 15px;
+        font-family: Consolas;
+        color: #606266;
+        .pageNametitle {
+            text-align: center;
+        }
+
+        // .pageNameInput {
+        //     margin: 10px;
+        //     height: 30px;
+        //     padding: 4px;
+        //     color: #606266;
+        //     border-radius: 5px;
+        //     text-align: center;
+        //     background-color: #fff;
+        //     border: 1px solid  #ddd;
+        // }
+
+                
+        // input:focus {
+        //     border: 1px solid rgb(var(--primary-6));
+        //     outline: none; //这个可以把原来的线去掉
+        // }
+    }
+
+    .spin {
+        text-align: center;
+    }
+
+    .plugItems {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        height: 80%;
+        font-family: Consolas;
+        font-size: 14px;
+        color: #606266;
+        // 组件属性 style
+        .plugItemList {
+            margin-bottom: 40px;
+        }
+
+        // 组件 自定义事件 style
+        .plugItemEvent {
+            .eventSelect {
+                color: #606266;
+                font-size: 14px;
+                margin: 5px;
+                padding: 5px;
+                border: 1px solid #ddd;
+            }
+        }
+    }
+
+    input {
+        margin: 10px;
+        height: 30px;
+        padding: 4px;
+        color: #606266;
+        border-radius: 5px;
+        text-align: center;
+        background-color: #fff;
+        border: 1px solid  #ddd;
+    }
+
+
+    input:focus {
+        border: 1px solid rgb(var(--primary-6));
+        outline: none; //这个可以把原来的线去掉
+    }
+
+    select:focus{
+        border: 2px #ddd solid;
+        box-shadow: 0 0 15px 1px #DDDDDD;
     }
 }

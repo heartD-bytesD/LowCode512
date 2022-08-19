@@ -1,20 +1,32 @@
 <template>
     <div class="editor-right">
-        <div v-if="projectStore.currentElement === undefined">
-            <p>页面名称</p>
+        <!-- 页面属性  -->
+        <div class="pagesItem">
+            <span id="itemText">画布属性</span>
+        </div>
+        <!-- 页面名称 -->   
+        <div class="pageName" v-if="projectStore.currentElement === undefined">
+            <p class="pageNametitle">页面名称</p>
             <input
+                :style="{width:'170px'}"
+                class="pageNameInput"
                 :value="projectStore.currentPage.name"
                 @input="onPageNameChange($event)"
             />
             <!-- TODO: 防抖 -->
         </div>
+
+        <!-- 标题属性 | 图片属性 -->
         <div
+            class="spin"
             v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)"
         >
-            loading
+              <a-space>
+                <a-spin :size="32"/>
+            </a-space>
         </div>
-        <div v-else>
-            <div v-for="key in Object.keys(editorProps)" :key="key">
+        <div class="plugItems" v-else>
+            <div class="plugItemList" v-for="key in Object.keys(editorProps)" :key="key">
                 <p v-if="editorProps[key].display" class="display">
                     {{ editorProps[key].display }}
                 </p>
@@ -37,23 +49,28 @@
                     @change="onPropsChange($event, key)"
                 />
             </div>
-            <div>
+            <div class="plugItemEvent">
                 <p class="display">
                     自定义事件
                 </p>
                 <select
+                    class="eventSelect"
                     :value="eventStore.currentType"
                     @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
                 >
                     <option
+                        class="eventOption"
                         v-for="item in eventStore.editorEvents"
                         :key="item.type"
                     >
                         {{ item.type }}
                     </option>
                 </select>
-                <select>
+                <select 
+                    class="eventSelect"
+                >
                     <option
+                        class="eventOption"
                         v-for="item in eventStore.currentEvents"
                         :key="item.name"
                     >
@@ -71,7 +88,7 @@
                         />
                     </div>
                 </div>
-                <button @click="onEventSave">保存</button>
+                <a-button type="primary" @click="onEventSave">保存</a-button>
             </div>
         </div>
     </div>
