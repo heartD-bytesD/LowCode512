@@ -2,8 +2,15 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    color: #606266;
     text-overflow: ellipsis;
-    border-radius: 2px;
-    border: none;
-    background-color: #66ccff;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+
+button:hover {
+    color: #206CCF;
+    background-color: #E8F7FF;
 }

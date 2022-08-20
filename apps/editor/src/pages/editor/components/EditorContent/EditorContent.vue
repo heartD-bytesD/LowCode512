@@ -27,6 +27,7 @@
                 <!-- 添加网格  -->
                 <Grid />
                 <div v-for="item in projectStore.currentPageElements" :key="item.id" class="element">
+                <!-- 虚线框 VueDragResize-->
                     <VueDragResize @mousedown="projectStore.setCurrentElement(item)"
                         :active="projectStore.currentElement?.id === item.id" @dragging="onDragEnd" @drag-end="onSaveSnapshot"
                         :x="item.style.left || 0" :y="item.style.top || 0" @resizing="onDragEnd" @resize-end="onSaveSnapshot"
