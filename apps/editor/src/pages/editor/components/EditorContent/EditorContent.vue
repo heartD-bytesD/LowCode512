@@ -50,6 +50,8 @@ import VueDragResize from "vue-drag-resize-next";
 import app from '@/app'
 
 import "vue-drag-resize-next/lib/style.css";
+// 虚线框样式
+import "./DargResize.less";
 import "./EditorContent.less";
 
 import Grid from "../Grid/index.vue"
