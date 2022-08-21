@@ -7,7 +7,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: "./src/index.ts",
-            name: "LcTitle",
+            name: "LcSlider",
             fileName: `${pkg.name.split("/")[1]}.${pkg.version}`,
             formats: ["umd"],
         },

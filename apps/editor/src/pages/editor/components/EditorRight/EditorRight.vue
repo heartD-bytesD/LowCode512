@@ -44,6 +44,12 @@
                     type="number"
                 />
                 <input
+                    v-if="editorProps[key].type === 'value'"
+                    :value="projectStore.currentElement.props[key]"
+                    @change="onPropsChange($event, key)"
+                    type="number"
+                />
+                <input
                     v-if="editorProps[key].type === 'color'"
                     :value="projectStore.currentElement.props[key]"
                     @change="onPropsChange($event, key)"
