@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
     title: string;
-    color: string;
+    // color: string;
     size: number;
     borderRadius: number;
     events?: Record<string, any[]>;
@@ -17,7 +17,7 @@ function onClick() {
     <button
         :style="{
             fontSize: size + 'px',
-            color: color,
+            // color: color,
             borderRadius: borderRadius + 'px',
         }"
         class="lc-button"

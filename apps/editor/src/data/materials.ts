@@ -26,7 +26,7 @@ export const materialList: IMaterial[] = [
             name: "基础组件",
         },
         name: "LcTitle",
-        title: "标题",
+        title: "文字",
         thumbnail: "",
         version: "0.0.1",
         source: "/lc-title.0.0.1.umd.js",
@@ -148,7 +148,7 @@ export function getMaterialRenderFun(material: IMaterial) {
 
 export function getMaterialDefaultProps(material: IMaterial) {
     const props = getMaterialEditorProps(material);
-    if(!props) {
+    if (!props) {
         return {}
     }
     return Object.keys(props).reduce((pre, key) => {

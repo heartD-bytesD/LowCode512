@@ -11,12 +11,12 @@ export default {
         },
         color: {
             type: 'color',
-            defaultValue: '#333',
+            defaultValue: '#606266',
             display: '颜色'
         },
         size: {
             type: 'number',
-            defaultValue: 16,
+            defaultValue: 15,
             display: '大小'
         }
     }
