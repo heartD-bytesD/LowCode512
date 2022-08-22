@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {useProjectStore} from "@/store";
+import {router} from "@/router";
+import {useProjectStore, useHttpReqStore} from "@/store";
 import {useRouter} from "vue-router";
+import axios from "axios";
+import "./EditorHeader.less"
 
 const projectStore = useProjectStore();
+const httpReqStore = useHttpReqStore();
 const route = useRouter();
-import "./EditorHeader.less"
-import axios from "axios";
-import {postReqJson, produceReqJson} from "@/store/httpReq";
-import {router} from "@/router";
 
 function onSave() {
   projectStore.saveProject();
@@ -48,10 +48,10 @@ function onCut() {
 function onPublish() {
   //projectStore.saveProject();
   let projectData = projectStore.publishProject();
-  let reqJson = produceReqJson()
+  let reqJson = httpReqStore.produceReqJson()
   reqJson.type = "save"
   reqJson.project_data = JSON.stringify(projectData)
-  postReqJson(reqJson).then((response) => {
+  httpReqStore.postReqJson(reqJson).then((response) => {
     let responseJson = response.data
     if (!responseJson.status || responseJson.status != 200) {
       console.log(`请求失败 ${responseJson}`)
