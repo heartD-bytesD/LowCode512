@@ -23,5 +23,8 @@
   },
   "scripts": {
     "build": "vite build"
+  },
+  "dependencies": {
+    "qs": "^6.11.0"
   }
 }

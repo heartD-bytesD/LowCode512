@@ -15,15 +15,21 @@ export default defineConfig({
         ),
         vue(),
         Pages({ exclude: ["**/components/*"] }),
-        viteMocker({
-            // 请求响应延迟时间区间
-            delay: [0, 1000],
-        }) as unknown as PluginOption,
     ],
 
     define: {
         "process.env": process.env,
     },
+
+    server: {
+        proxy: {
+        // 请求项目json
+            '/api/fetchProjectData': {
+                target: "http://localhost:5197",
+                changeOrigin: true,
+            }
+        }
+    }
     // resolve: {
     //     alias: {
     //         "@": path.resolve(__dirname, "src"),
