@@ -13,6 +13,7 @@
     "@lowcode512/shared": "workspace:^1.0.0",
     "pinia": "^2.0.17",
     "tiny-emitter": "^2.1.0",
+    "vue-color-kit": "^1.0.5",
     "vue-drag-resize-next": "0.0.2-alpha.3",
     "vue-router": "^4.1.3"
   },

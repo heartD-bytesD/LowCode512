@@ -73,13 +73,15 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
-    function changeElementProps(props: Record<string, any>) {
+    function changeElementProps(props: Record<string, any>, element?: PageElement) {
         if (!currentElement.value) {
             return;
         }
-        const element = p
+        if(!element) {
+            var element = p
             .getPageByIndex(currentPageIndex.value)
             .getElementById(currentElement.value.id);
+        }
         element.props = {
             ...element.props,
             ...props,

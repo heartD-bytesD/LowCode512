@@ -44,12 +44,14 @@ importers:
       '@lowcode512/shared': workspace:^1.0.0
       pinia: ^2.0.17
       tiny-emitter: ^2.1.0
+      vue-color-kit: ^1.0.5
       vue-drag-resize-next: 0.0.2-alpha.3
       vue-router: ^4.1.3
     dependencies:
       '@lowcode512/shared': link:../../packages/shared
       pinia: 2.0.17_vue@3.2.37
       tiny-emitter: 2.1.0
+      vue-color-kit: 1.0.5_vue@3.2.37
       vue-drag-resize-next: 0.0.2-alpha.3
       vue-router: 4.1.3_vue@3.2.37
     devDependencies:
@@ -2997,6 +2999,14 @@ packages:
       - supports-color
       - terser
     dev: true
+
+  /vue-color-kit/1.0.5_vue@3.2.37:
+    resolution: {integrity: sha512-PUQzqdpI7672YYuoHdTLENHldieVMis0u9g2n7NAxiLGdiaqCD/QaYtbDOvtASpN5oSIfKxQgPV+i45MOlkKnw==}
+    peerDependencies:
+      vue: ^3.0.5
+    dependencies:
+      vue: 3.2.37
+    dev: false
 
   /vue-demi/0.13.6_vue@3.2.37:
     resolution: {integrity: sha512-02NYpxgyGE2kKGegRPYlNQSL1UWfA/+JqvzhGCOYjhfbLWXU5QQX0+9pAm/R2sCOPKr5NBxVIab7fvFU0B1RxQ==}

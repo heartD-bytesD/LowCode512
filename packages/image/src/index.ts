@@ -5,7 +5,7 @@ export default {
     render: App,
     editorProps: {
         src: {
-            type: 'string',
+            type: 'image',
             defaultValue: 'https://picsum.photos/200',
             display: 'URL'
         }
