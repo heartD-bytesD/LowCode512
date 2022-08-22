@@ -42,14 +42,34 @@
                     @change="onPropsChange($event, key)"
                 />
                 <div v-if="editorProps[key].type === 'image'">
-                    <input
-                        :value="image_file"
-                        @change="onUpload($event, key)"
-                        ref="imageInput"
-                        type="file"
-                        accept="image/*"
-                    />
-                    <a-button type='secondary' @click="onReset">重置</a-button>
+                    <a-switch v-model="isLocalImage" />
+                    <div v-if="isLocalImage">
+                        <input
+                            :value="
+                                projectStore.currentElement.props.local
+                                    ? ''
+                                    : projectStore.currentElement.props[key]
+                            "
+                            @change="onPropsChange($event, key)"
+                        />
+                    </div>
+                    <div v-else>
+                        <form
+                            method="post"
+                            action="/api/fetchImage"
+                            enctype="multipart/form-data"
+                        ></form>
+                        <input
+                            :value="image_file"
+                            @change="onUpload($event, key)"
+                            ref="imageInput"
+                            type="file"
+                            accept="image/*"
+                            name="image"
+                            id="image_input"
+                        />
+                    </div>
+                    <a-button type="secondary" @click="onReset">重置</a-button>
                 </div>
 
                 <input
@@ -140,12 +160,13 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
 import { getMaterialEditorProps, materialMap } from "@/data";
-import { useProjectStore, useEventStore } from "@/store";
+import { useProjectStore, useEventStore, useHttpReqStore } from "@/store";
 import { ColorPicker } from "vue-color-kit";
 import "vue-color-kit/dist/vue-color-kit.css";
 import "./EditorRight.less";
 
 const eventStore = useEventStore();
+const HttpReqStore = useHttpReqStore();
 const checkObj = reactive({
     color: false,
     backgroundColor: false,
@@ -160,15 +181,9 @@ const editorProps = computed(() => {
 
 let preview = ref(null);
 let image = ref(null);
-
 const imageInput = ref(null);
 let image_file = "";
-// const elementProps = computed(() => {
-//     if (!projectStore.currentElement) {
-//         return {};
-//     }
-//     return projectStore.currentElement.props;
-// });
+const isLocalImage = ref(true);
 function onPropsChange(e: Event, key: string, type?: string) {
     if (type === "boolean") {
         projectStore.changeElementProps({
@@ -210,14 +225,13 @@ function onChangeColor(color, key: string) {
 
 function onUpload(e: Event, key: string) {
     const element = projectStore.currentElement;
-    console.log(element);
     let input = (e.target as HTMLInputElement).files;
     if (input) {
         const reader = new FileReader();
         reader.onload = (e) => {
             preview.value = e.target.result;
             projectStore.changeElementProps({ src: preview.value }, element);
-            console.log(preview.value)
+            HttpReqStore.uploadPicture(element);
         };
         image.value = input[0];
         reader.readAsDataURL(input[0]);
@@ -228,7 +242,6 @@ function onReset() {
     preview.value = null;
     image.value = null;
     projectStore.changeElementProps({ src: preview.value });
-    
 }
 </script>
 

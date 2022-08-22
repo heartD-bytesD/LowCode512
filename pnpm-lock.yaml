@@ -43,7 +43,6 @@ importers:
       '@arco-design/web-vue': ^2.35.0
       '@lowcode512/shared': workspace:^1.0.0
       axios: ^0.27.2
-      element-plus: ^2.2.14
       pinia: ^2.0.17
       tiny-emitter: ^2.1.0
       vue-color-kit: ^1.0.5
@@ -52,7 +51,6 @@ importers:
     dependencies:
       '@lowcode512/shared': link:../../packages/shared
       axios: 0.27.2
-      element-plus: 2.2.14_vue@3.2.37
       pinia: 2.0.17_vue@3.2.37
       tiny-emitter: 2.1.0
       vue-color-kit: 1.0.5_vue@3.2.37
@@ -812,10 +810,6 @@ packages:
   /assertion-error/1.1.0:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
-
-  /async-validator/4.2.5:
-    resolution: {integrity: sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==}
-    dev: false
 
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
