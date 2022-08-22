@@ -1,59 +1,81 @@
 <script setup lang="ts">
-import { useProjectStore } from "@/store";
-import { useRouter } from "vue-router";
+import {useProjectStore} from "@/store";
+import {useRouter} from "vue-router";
+
 const projectStore = useProjectStore();
 const route = useRouter();
 import "./EditorHeader.less"
+import axios from "axios";
+import {postReqJson, produceReqJson} from "@/store/httpReq";
+import {router} from "@/router";
 
 function onSave() {
-    projectStore.saveProject();
+  projectStore.saveProject();
 }
 
 function onPreview() {
-    route.push("/preview");
+  route.push("/preview");
 }
 
 function onReset() {
-    projectStore.resetProject();
+  projectStore.resetProject();
 }
 
 function onUndo() {
-    projectStore.undo()
+  projectStore.undo()
 }
 
 function onRedo() {
-    projectStore.redo()
+  projectStore.redo()
 }
 
 function onCopy() {
-    projectStore.copyElement();
+  projectStore.copyElement();
 }
 
 function onPaste() {
-    projectStore.pasteElement();
+  projectStore.pasteElement();
 }
 
 function onRemove() {
-    projectStore.removeElement();
+  projectStore.removeElement();
 }
 
 function onCut() {
-    projectStore.cutElement();
+  projectStore.cutElement();
 }
 
+function onPublish() {
+  //projectStore.saveProject();
+  let projectData = projectStore.publishProject();
+  let reqJson = produceReqJson()
+  reqJson.type = "save"
+  reqJson.project_data = JSON.stringify(projectData)
+  postReqJson(reqJson).then((response) => {
+    let responseJson = response.data
+    if (!responseJson.status || responseJson.status != 200) {
+      console.log(`请求失败 ${responseJson}`)
+      alert("保存失败")
+      return
+    }
+    alert(`保存成功`)
+    router.push(`publish/${responseJson.project_id}`)
+  })
+}
 </script>
 
 
 <template>
-    <div class="editor-content-header">
-        <a-button type="outline" @click="onCopy">复制</a-button>
-        <a-button type="outline" @click="onPaste">粘贴</a-button>
-        <a-button type="outline" @click="onCut">剪切</a-button>
-        <a-button type="outline" @click="onRemove" status='danger'>删除</a-button>
-        <a-button type="outline" @click="onUndo">后退</a-button>
-        <a-button type="outline" @click="onRedo">前进</a-button>
-        <a-button type="outline" @click="onSave">保存</a-button>
-        <a-button type="outline" @click="onPreview">预览</a-button>
-        <a-button type="outline" @click="onReset">重置</a-button>
-    </div>
+  <div class="editor-content-header">
+    <a-button type="outline" @click="onCopy">复制</a-button>
+    <a-button type="outline" @click="onPaste">粘贴</a-button>
+    <a-button type="outline" @click="onCut">剪切</a-button>
+    <a-button type="outline" @click="onRemove" status='danger'>删除</a-button>
+    <a-button type="outline" @click="onUndo">后退</a-button>
+    <a-button type="outline" @click="onRedo">前进</a-button>
+    <a-button type="outline" @click="onSave">保存</a-button>
+    <a-button type="outline" @click="onPreview">预览</a-button>
+    <a-button type="outline" @click="onReset" status="danger">重置</a-button>
+    <a-button type="outline" @click="onPublish">发布</a-button>
+  </div>
 </template>
