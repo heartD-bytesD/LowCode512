@@ -22,16 +22,13 @@ pnpm i
 ### 2. 编译共享模块
 
 ```
-cd packages/shared
-pnpm run build
+cd packages/shared && pnpm run build && cd ../..
 ```
 
 ### 3. 启动编辑器
 
 ```
-cd apps/editor
-pnpm i
-pnpm run dev
+cd apps/editor && pnpm i && pnpm run dev && cd ../..
 ```
 
 服务启动后进入[http://127.0.0.1:5173/editor]()以查看编辑器
