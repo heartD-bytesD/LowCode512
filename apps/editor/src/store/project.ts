@@ -129,15 +129,10 @@ export const useProjectStore = defineStore("project", () => {
 
     function resetProject() {
         p = project.value = Project.create();
-        saveProject();
-        // sorry for doing that, but i don't really understand the structure for now
-        // so i choose this way to refresh page
-        // router.push("/").then( () => {
-        //         setTimeout(() => {
-        //             router.push("/editor")
-        //         }, 200)
-        //     }
-        // )
+    }
+
+    function publishProject() {
+        return p.getJson()
     }
 
     function setCurrentPageIndex(index: number) {
@@ -280,6 +275,7 @@ export const useProjectStore = defineStore("project", () => {
 
         saveProject,
         resetProject,
+        publishProject,
 
         saveSnapshot,
         undo,
