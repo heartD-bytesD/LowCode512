@@ -7,6 +7,7 @@ const props = defineProps<{
     color: string;
     size: number;
     group: string;
+    checkAll: boolean;
     events?: Record<string, any[]>;
 }>();
 </script>

@@ -9,10 +9,10 @@
     -webkit-appearance: none; /* Override default CSS styles */
     appearance: none;
     width: 100%; /* Full-width */
-    height: 20px; /* Specified height */
+    height: calc(var(--barSize) * 1px); /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    opacity: var(--opacity); /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
     transition: opacity 0.2s;
     border-radius: 12px;
@@ -29,13 +29,21 @@
     appearance: none;
     width: 20px; /* Set a specific slider handle width */
     height: 20px; /* Slider handle height */
-    background: #66ccff; /* Green background */
+    background: var(--color); /* Background color*/
     cursor: pointer; /* Cursor on hover */
+    border-radius: calc(var(--radius) * 1px);
+    border: 1px solid #1155ff;
 }
 
 .slider::-moz-range-thumb {
     width: 20px; /* Set a specific slider handle width */
     height: 20px; /* Slider handle height */
-    background: #66ccff; /* Green background */
+    background: var(--color); /* Background color */
     cursor: pointer; /* Cursor on hover */
+}
+
+.lc-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

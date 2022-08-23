@@ -11,18 +11,39 @@ export default {
         },
         color: {
             type: 'color',
-            defaultValue: '#333',
-            display: '颜色'
+            defaultValue: '#66ccff',
+            display: '滑块颜色'
         },
-        size: {
+        barSize: {
             type: 'number',
             defaultValue: 16,
-            display: '大小'
+            display: '滑条高度',
+            min: 1,
+            max: 100
         },
+        textSize: {
+            type: 'number',
+            defaultValue: 16,
+            display: '文字大小',
+            min: 1,
+            max: 100
+        },
+        // round: {
+        //     type: 'checkbox',
+        //     defaultValue: false,
+        //     display: '圆型滑块',
+        // },
         value: {
             type: 'value',
             defaultValue: 50,
             display: '值'
+        },
+        opacity: {
+            type: 'slider',
+            defaultValue: 50,
+            display: '滑条透明度',
+            min: 0,
+            max: 1,
         }
     }
 };

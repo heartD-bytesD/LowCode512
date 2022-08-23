@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { nanoid } from "nanoid";
 
-const id = nanoid();
 const props = defineProps<{
     title: string;
     color: string;
@@ -16,9 +14,9 @@ const props = defineProps<{
 
 <template>
     <div class="lc-radio">
-        <input :group="group" type="radio" :name="id" />
+        <input type="radio" :name="group" />
         <label
-            :for="id"
+            :for="group"
             :style="{
                 fontSize: size + 'px',
                 color: color,

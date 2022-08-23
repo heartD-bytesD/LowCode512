@@ -5,4 +5,7 @@
     text-overflow: ellipsis;
     border-radius: 2px;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

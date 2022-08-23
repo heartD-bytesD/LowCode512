@@ -28,13 +28,17 @@ export const materialList: IMaterial[] = [
         name: "LcTitle",
         title: "文字",
         thumbnail: "",
-        version: "0.0.1",
-        source: "/lc-title.0.0.1.umd.js",
+        version: "0.0.2",
+        source: "/lc-title.0.0.2.umd.js",
         data: [
             {
                 version: "0.0.1",
                 source: "/lc-title.0.0.1.umd.js",
             },
+            {
+                version: "0.0.2",
+                source: "/lc-title.0.0.2.umd.js",
+            }
         ],
     },
     {
@@ -64,12 +68,16 @@ export const materialList: IMaterial[] = [
         name: "LcCheckbox",
         title: "复选框",
         thumbnail: "",
-        version: "0.0.1",
-        source: "/lc-checkbox.0.0.1.umd.js",
+        version: "0.0.2",
+        source: "/lc-checkbox.0.0.2.umd.js",
         data: [
             {
                 version: "0.0.1",
                 source: "/lc-checkbox.0.0.1.umd.js",
+            },
+            {
+                version: "0.0.2",
+                source: "/lc-checkbox.0.0.2.umd.js",
             },
         ],
     },
@@ -118,12 +126,16 @@ export const materialList: IMaterial[] = [
         name: "LcSlider",
         title: "滑条",
         thumbnail: "",
-        version: "0.0.1",
-        source: "/lc-slider.0.0.1.umd.js",
+        version: "0.0.2",
+        source: "/lc-slider.0.0.2.umd.js",
         data: [
             {
                 version: "0.0.1",
                 source: "/lc-slider.0.0.1.umd.js",
+            },
+            {
+                version: "0.0.2",
+                source: "/lc-slider.0.0.2.umd.js",
             },
         ],
     },
