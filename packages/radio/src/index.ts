@@ -21,7 +21,7 @@ export default {
         },
         group: {
             type: 'group',
-            defaultValue: 2,
+            defaultValue: undefined,
             display: '组别'
         }
     }

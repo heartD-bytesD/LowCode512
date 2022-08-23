@@ -23,6 +23,6 @@ export default {
             type: 'group',
             defaultValue: 2,
             display: '组别'
-        }
+        },
     }
 };

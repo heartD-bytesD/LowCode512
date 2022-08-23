@@ -11,10 +11,12 @@ const { title, color, size } = defineProps<{
 </script>
 
 <template>
-<div :style="{
+<div
+    class="lc-div"
+    :style="{
     backgroundColor: backgroundColor,
 }">
-    <p :style="{
+    <div :style="{
         fontSize: size + 'px',
         color: color,
         fontWeight: bold? 'bold' : 'normal' ,
@@ -22,7 +24,7 @@ const { title, color, size } = defineProps<{
         }" 
         class="lc-title">
         {{ title }}
-    </p>
+    </div>
 </div>
 
 </template>

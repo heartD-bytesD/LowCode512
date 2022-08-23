@@ -108,13 +108,39 @@
                     @change="onPropsChange($event, key, 'boolean')"
                     type="checkbox"
                 />
-                <select
-                    v-if="editorProps[key].type === 'group'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key)"
-                >
-                    <option disabled>请选择</option>
-                </select>
+                <div v-if="editorProps[key].type === 'group'">
+                    <div v-if="projectStore.currentElement.mId === 5">
+                        <select
+                            class="eventSelect"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key)"
+                        >
+                            <option
+                                class="eventOption"
+                                v-for="groupName in projectStore.currentRadioGroups"
+                            >
+                                {{ groupName }}
+                            </option>
+                        </select>
+                    </div>
+                    <div v-else>
+                        <select
+                            class="eventSelect"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key)"
+                        >
+                            <option
+                                class="eventOption"
+                                v-for="groupName in projectStore.currentCheckboxGroups"
+                            >
+                                {{ groupName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <input v-model="newGroup" />
+                    <a-button @click="onAddGroup">添加</a-button>
+                </div>
             </div>
             <div class="plugItemEvent">
                 <p class="display">自定义事件</p>
@@ -184,6 +210,7 @@ let image = ref(null);
 const imageInput = ref(null);
 let image_file = "";
 const isLocalImage = ref(true);
+let newGroup = ref("");
 function onPropsChange(e: Event, key: string, type?: string) {
     if (type === "boolean") {
         projectStore.changeElementProps({
@@ -223,7 +250,7 @@ function onChangeColor(color, key: string) {
     });
 }
 
-function onUpload(e: Event, key: string) {
+function onUpload(e: Event, key?: string) {
     const element = projectStore.currentElement;
     let input = (e.target as HTMLInputElement).files;
     if (input) {
@@ -242,6 +269,11 @@ function onReset() {
     preview.value = null;
     image.value = null;
     projectStore.changeElementProps({ src: preview.value });
+}
+
+function onAddGroup() {
+    projectStore.changeElementProps({ group: newGroup.value });
+    console.log(projectStore.currentRadioGroups);
 }
 </script>
 

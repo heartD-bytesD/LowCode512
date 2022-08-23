@@ -56,6 +56,27 @@ export const useProjectStore = defineStore("project", () => {
     const currentCopyStack = reactive({
         value: [],
     });
+    // 所有已添加的组
+    const currentRadioGroups = computed(() => {
+        let groups = [];
+        currentPageElements.value.map((element) => {
+            if (element.mId != 5 || !element.props.group || groups.includes(element.props.group)) {
+                return;
+            }
+            groups.push(element.props.group);
+        });
+        return groups;
+    });
+    const currentCheckboxGroups = computed(() => {
+        let groups = [];
+        currentPageElements.value.map((element) => {
+            if (element.mId != 4 || !element.props.group || groups.includes(element.props.group)) {
+                return;
+            }
+            groups.push(element.props.group);
+        });
+        return groups;
+    });
 
     function setCurrentElement(element: PageElement) {
         currentElementId.value = element.id;
@@ -72,14 +93,17 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
-    function changeElementProps(props: Record<string, any>, element?: PageElement) {
+    function changeElementProps(
+        props: Record<string, any>,
+        element?: PageElement
+    ) {
         if (!currentElement.value) {
             return;
         }
-        if(!element) {
+        if (!element) {
             var element = p
-            .getPageByIndex(currentPageIndex.value)
-            .getElementById(currentElement.value.id);
+                .getPageByIndex(currentPageIndex.value)
+                .getElementById(currentElement.value.id);
         }
         element.props = {
             ...element.props,
@@ -131,7 +155,7 @@ export const useProjectStore = defineStore("project", () => {
     }
 
     function publishProject() {
-        return p.getJson()
+        return p.getJson();
     }
 
     function setCurrentPageIndex(index: number) {
@@ -152,7 +176,7 @@ export const useProjectStore = defineStore("project", () => {
     }
 
     function saveSnapshot() {
-        if(currentSnapshotIndex.value < currentSnapshots.value.length - 1) {
+        if (currentSnapshotIndex.value < currentSnapshots.value.length - 1) {
             removeSnapshots(currentSnapshotIndex.value);
         }
         currentSnapshots.value.push(
@@ -222,7 +246,9 @@ export const useProjectStore = defineStore("project", () => {
         page.addElement(PageElement.create(...currentCopyStack.value, true));
         project.value = p.getJson();
         // For multi-selected, just spread the array
-        setCurrentElement(currentPageElements.value[currentPageElements.value.length - 1]);
+        setCurrentElement(
+            currentPageElements.value[currentPageElements.value.length - 1]
+        );
     }
 
     function removeElement() {
@@ -248,12 +274,16 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
+    // 获取元素的所有分组
+
     return {
         currentPage,
         currentPageIndex,
         currentPageElements,
         currentElement,
         currentElementId,
+        currentRadioGroups,
+        currentCheckboxGroups,
         project,
 
         addElement,
