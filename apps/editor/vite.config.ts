@@ -27,6 +27,10 @@ export default defineConfig({
             '/api/fetchProjectData': {
                 target: "http://localhost:5197",
                 changeOrigin: true,
+            },
+            '/api/fetchImage': {
+                target: "http://localhost:5197",
+                changeOrigin: true,
             }
         }
     }

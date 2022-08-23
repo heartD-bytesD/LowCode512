@@ -18,6 +18,23 @@ export default {
             type: 'number',
             defaultValue: 15,
             display: '大小'
-        }
+        },
+        bold: {
+            type: 'checkbox',
+            defaultValue: false,
+            display: '粗体',
+            sameLine: true,
+        },
+        italic: {
+            type: 'checkbox',
+            defaultValue: false,
+            display: '斜体',
+            sameLine: true,
+        },
+        backgroundColor: {
+            type: 'color',
+            defaultValue: 'transparent',
+            display: '背景颜色'
+        },
     }
 };

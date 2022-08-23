@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed, ref, reactive, watchEffect } from "vue";
+import { computed, ref, reactive } from "vue";
 import {
     IProject,
     Project,
@@ -10,7 +10,6 @@ import {
 import { loadMaterial } from "@/utils";
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
 import app from "@/app";
-import { router } from "@/router";
 
 const LOCAL_STORAGE_PROJECT = "__project";
 
@@ -73,13 +72,15 @@ export const useProjectStore = defineStore("project", () => {
         project.value = p.getJson();
     }
 
-    function changeElementProps(props: Record<string, any>) {
+    function changeElementProps(props: Record<string, any>, element?: PageElement) {
         if (!currentElement.value) {
             return;
         }
-        const element = p
+        if(!element) {
+            var element = p
             .getPageByIndex(currentPageIndex.value)
             .getElementById(currentElement.value.id);
+        }
         element.props = {
             ...element.props,
             ...props,
