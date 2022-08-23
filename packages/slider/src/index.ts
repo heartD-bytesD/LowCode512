@@ -28,11 +28,11 @@ export default {
             min: 1,
             max: 100
         },
-        round: {
-            type: 'checkbox',
-            defaultValue: false,
-            display: '圆型滑块',
-        },
+        // round: {
+        //     type: 'checkbox',
+        //     defaultValue: false,
+        //     display: '圆型滑块',
+        // },
         value: {
             type: 'value',
             defaultValue: 50,
