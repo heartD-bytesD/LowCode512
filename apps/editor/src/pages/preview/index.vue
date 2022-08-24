@@ -115,6 +115,9 @@ onBeforeMount(async () => {
 
 // 切换页面
 let pageChange = function (nextPageIndex) {
+  if(nextPageIndex == pageIndex.value){
+    return
+  }
   if(isPreviewPage.value){
     window.location.assign(`/preview/${nextPageIndex}`)
   }else{
