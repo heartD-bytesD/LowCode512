@@ -21,8 +21,8 @@
     </div>
   <a-card v-if="!loading" :title='project.name + " - 第" + (pageIndex + 1) + "页 - " + page.name' >
       <a-menu class="ls-preview-menu">
-        <a-menu-item v-for="[mIndex, _] in project.pages.entries()" @click="pageChange(mIndex)">
-          <a>第{{mIndex+1}}页</a>
+        <a-menu-item v-for="[mIndex, mPage] in project.pages.entries()" @click="pageChange(mIndex)">
+          <a>第{{mIndex+1}}页 - {{mPage.name}}</a>
         </a-menu-item>
       </a-menu>
   </a-card>
