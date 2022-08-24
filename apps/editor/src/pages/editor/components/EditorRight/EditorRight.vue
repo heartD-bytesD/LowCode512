@@ -91,7 +91,9 @@
                         {{ checkObj[key] ? "收起" : "取色" }}
                     </a-button>
                     <Transition name="slide">
+                        <!-- 取色器使用固定定位 -->
                         <ColorPicker
+                            style="position: fixed;"
                             theme="light"
                             :color="projectStore.currentElement.props[key]"
                             :sucker-hide="false"

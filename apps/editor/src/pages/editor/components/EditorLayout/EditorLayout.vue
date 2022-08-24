@@ -13,7 +13,7 @@ import EditorContent from '../EditorContent/EditorContent.vue';
             <a-layout-content class="editor-content">
                 <EditorContent />
             </a-layout-content>
-            <a-layout-sider>
+            <a-layout-sider style="width: 215px;">
                 <EditorRight />
             </a-layout-sider>
         </a-layout>
