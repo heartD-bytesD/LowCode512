@@ -34,23 +34,29 @@ import {IProject, Project} from "@lowcode512/shared";
 import {getMaterialRenderFun, materialMap} from "@/data";
 import "./index.less";
 import {router} from "@/router"
-import {onBeforeMount, onMounted, ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {loadMaterial} from "@/utils";
 import app from "@/app";
 
+// 加载中的状态
 let loading = ref(true)
+// 加载中或出错的文字提示
 let loadingAlert = ref("加载中...")
+// 显示的页面数据
 let page = ref({name: "", elements:[]})
+// 当前页面对应的项目数据
 let project = ref(Project.create())
+// 当前页面对应的项目数据中的页码
 let pageIndex = ref(0)
-let pageNumber = ref(project.value.pages.length)
+// 是否为预览页面
 let isPreviewPage = ref(window.location.href.includes("preview"))
+// 如果是，加载本地存储
 if(isPreviewPage.value){
   project.value = JSON.parse(localStorage.getItem("__project") || "{}") as IProject
   page.value = project.value.pages[pageIndex.value]
-  pageNumber.value = project.value.pages.length
 }
 
+// 读取页面参数
 // router.currentRoute.value.params有可能是空对象
 let projectId = null
 if(router.currentRoute.value.params){
@@ -84,7 +90,6 @@ const loadOnlineJson = async () => {
     }
     // 这块pageIndex是string | number | string[]，留意一下是否需要更严格的类型检验
     project.value = projectTmp
-    pageNumber.value = project.value.pages.length
   })
 }
 // 加载页面脚本
@@ -120,6 +125,7 @@ let pageChange = function (nextPageIndex) {
 </script>
 
 <style scoped>
+/* 菜单淡入淡出 */
 .ls-preview-menu{
   opacity: 0;
   transition: opacity 1.0s;
