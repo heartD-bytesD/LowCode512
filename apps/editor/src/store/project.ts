@@ -11,7 +11,7 @@ import { loadMaterial } from "@/utils";
 import { getMaterialDefaultProps, getMaterialRenderFun } from "@/data";
 import app from "@/app";
 
-const LOCAL_STORAGE_PROJECT = "__project";
+export const LOCAL_STORAGE_PROJECT = "__project";
 
 // read saved Project if having one
 export let p = computed(() => {
@@ -21,13 +21,24 @@ export let p = computed(() => {
         console.info("本地没有已保存的项目数据");
         return Project.create();
     }
-    console.info(`读取到本地已保存的项目数据: ${pJson}`);
-    return Project.create(JSON.parse(pJson));
+    try{
+        let pJsonParsed = JSON.parse(pJson)
+        if(!pJsonParsed.pages){
+            console.warn("本地已保存的项目数据有误");
+            return Project.create();
+        }
+        console.info(`读取到本地已保存的项目数据: ${pJson}`);
+        return Project.create(pJsonParsed);
+    }catch (e) {
+        console.warn("本地已保存的项目数据不是一个合法的JSON");
+        return Project.create();
+    }
 }).value as Project;
 
 export const useProjectStore = defineStore("project", () => {
     const materials = ref<Record<string, IMaterial>>({});
     const project = ref<IProject>(p.getJson());
+    const projectId = ref("");
     const currentPageIndex = ref(0);
     const currentPage = computed(
         () => project.value.pages[currentPageIndex.value]
@@ -101,7 +112,7 @@ export const useProjectStore = defineStore("project", () => {
             return;
         }
         if (!element) {
-            var element = p
+            element = p
                 .getPageByIndex(currentPageIndex.value)
                 .getElementById(currentElement.value.id);
         }
@@ -167,6 +178,11 @@ export const useProjectStore = defineStore("project", () => {
         const page = Page.create();
         p.addPage(page);
         project.value = p.getJson();
+    }
+
+    function changeProjectName(name: string){
+        p.name = name
+        project.value = p.getJson()
     }
 
     function changePageName(name: string) {
@@ -285,6 +301,7 @@ export const useProjectStore = defineStore("project", () => {
         currentRadioGroups,
         currentCheckboxGroups,
         project,
+        projectId,
 
         addElement,
         setCurrentElement,
@@ -296,6 +313,7 @@ export const useProjectStore = defineStore("project", () => {
         cutElement,
 
         addPage,
+        changeProjectName,
         changePageName,
         setCurrentPageIndex,
 
