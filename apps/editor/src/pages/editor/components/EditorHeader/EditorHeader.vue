@@ -19,6 +19,10 @@ function onPreview() {
 }
 
 function onReset() {
+  const result = confirm("确定要重置当前内容吗？")
+  if(!result){
+    return
+  }
   projectStore.resetProject();
 }
 
