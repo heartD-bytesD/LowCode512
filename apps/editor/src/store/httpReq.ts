@@ -64,18 +64,6 @@ export const useHttpReqStore = defineStore("httpReq", () => {
                 resolve(mockedResponse)
             })
         }
-        // 保存时在原地更新后写回
-        if(reqJson.type == PROJECT_METHOD_SAVE){
-            // 由于渲染不需要创建时间和更新时间信息，没有进行缓存
-            console.log("缓存因单个post请求更新");
-            if(!localStorage[reqJson.project_id]){
-                localStorage[reqJson.project_id] = reqJson.project_data
-            }else{
-                const tmp = JSON.parse(localStorage[reqJson.project_id]) as ProjectDatabaseJson
-                tmp.project_data = reqJson.project_data;
-                localStorage[reqJson.project_id] = JSON.stringify(tmp)
-            }
-        }
         return axios({
             method: "post",
             data: JSON.stringify(reqJson),
@@ -86,6 +74,25 @@ export const useHttpReqStore = defineStore("httpReq", () => {
             transformRequest: [
                 data => {return data}
             ]
+        }).then((result) => {
+            // 保存时在原地更新后写回
+            let responseJson = result.data as DataResponseJson
+            if(responseJson.status != 200){
+                return result
+            }
+            if(reqJson.type == PROJECT_METHOD_SAVE){
+                // 由于渲染不需要创建时间和更新时间信息，没有进行缓存
+                console.log("缓存因单个post请求更新");
+                localStorage[responseJson.project_id] = JSON.stringify({
+                    project_id : responseJson.project_id,
+                    project_data: reqJson.project_data,
+                    project_create_time: responseJson.project_create_time,
+                    project_last_edit_time: responseJson.project_last_edit_time
+                } as ProjectDatabaseJson)
+            }
+            return result
+        }, (err) => {
+            return err
         })
     }
 

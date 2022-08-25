@@ -19,7 +19,7 @@
         ></component>
       </div>
     </div>
-  <a-card v-if="!loading" :title='project.name + " - 第" + (pageIndex + 1) + "页 - " + page.name' >
+  <a-card class="ls-preview-menu-card" v-if="!loading" :title='project.name + " - 第" + (pageIndex + 1) + "页 - " + page.name' >
     <a-button @click="PreviewOnEdit">继续编辑</a-button>
     <a-button @click="router.push('/')">返回主页</a-button>
       <a-menu class="ls-preview-menu">
@@ -135,6 +135,7 @@ let PreviewOnEdit = function(){
       return
     }
     router.push("/editor")
+    return
   }
   const projectJson = JSON.parse(localStorage[projectId]) as ProjectDatabaseJson
   MenuOnEdit(projectJson, router)
@@ -143,13 +144,4 @@ let PreviewOnEdit = function(){
 </script>
 
 <style scoped>
-/* 菜单淡入淡出 */
-.ls-preview-menu{
-  opacity: 0;
-  transition: opacity 1.0s;
-}
-.ls-preview-menu:hover{
-  opacity: 100%;
-  transition: opacity 1.0s;
-}
 </style>
