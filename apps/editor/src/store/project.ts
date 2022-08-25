@@ -18,10 +18,10 @@ export let p = computed(() => {
     // JSON.parse(localStorage.getItem("__project") || "{}");
     let pJson = localStorage.getItem(LOCAL_STORAGE_PROJECT);
     if (!pJson) {
-        console.info("没有已保存的项目数据");
+        console.info("本地没有已保存的项目数据");
         return Project.create();
     }
-    console.info(`读取到已保存的项目数据: ${pJson}`);
+    console.info(`读取到本地已保存的项目数据: ${pJson}`);
     return Project.create(JSON.parse(pJson));
 }).value as Project;
 
