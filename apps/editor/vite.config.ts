@@ -1,9 +1,8 @@
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig } from "vite";
 // import path from "path";
 import vue from "@vitejs/plugin-vue";
 import Pages from "vite-plugin-pages";
 import paths from "vite-tsconfig-paths";
-import viteMocker from "vite-plugin-mocker";
 
 export default defineConfig({
     // TODO paths不生效
@@ -29,6 +28,10 @@ export default defineConfig({
                 changeOrigin: true,
             },
             '/api/fetchImage': {
+                target: "http://localhost:5197",
+                changeOrigin: true,
+            },
+            '/api/fetchProjectDataAll': {
                 target: "http://localhost:5197",
                 changeOrigin: true,
             }

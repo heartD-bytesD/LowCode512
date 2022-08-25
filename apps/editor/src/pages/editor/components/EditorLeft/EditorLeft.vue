@@ -5,6 +5,9 @@
             <MaterialBlock :title="item.title"> </MaterialBlock>
         </div>
     </div>
+   <a-card title="项目名称">
+     <a-input @change="projectStore.changeProjectName" :default-value="projectStore.project.name"></a-input>
+   </a-card>
     <div class="editor-left-pages">
         <EditorPages/>
     </div>
@@ -22,7 +25,7 @@ import EditorPages from '../EditorPages/EditorPages.vue'
 import EditorElements from '../EditorElements/EditorElements.vue'
 import { getMaterialDefaultProps, materialList } from "@/data"; // @路径导入ts文件报错
 import { IMaterial } from "@lowcode512/shared";
-import { useProjectStore} from '@/store'
+import { useProjectStore } from '@/store'
 import { PageElement } from "@lowcode512/shared";
 
 const projectStore = useProjectStore();

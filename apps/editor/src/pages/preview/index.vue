@@ -20,6 +20,8 @@
       </div>
     </div>
   <a-card v-if="!loading" :title='project.name + " - 第" + (pageIndex + 1) + "页 - " + page.name' >
+    <a-button @click="PreviewOnEdit">继续编辑</a-button>
+    <a-button @click="router.push('/')">返回主页</a-button>
       <a-menu class="ls-preview-menu">
         <a-menu-item v-for="[mIndex, mPage] in project.pages.entries()" @click="pageChange(mIndex)">
           <a>第{{mIndex+1}}页 - {{mPage.name}}</a>
@@ -29,14 +31,15 @@
 </template>
 
 <script setup lang="ts">
-import {useHttpReqStore} from "@/store";
+import {ProjectDatabaseJson, useHttpReqStore, useProjectStore} from "@/store";
 import {IProject, Project} from "@lowcode512/shared";
 import {getMaterialRenderFun, materialMap} from "@/data";
-import "./index.less";
 import {router} from "@/router"
 import {onBeforeMount, ref} from "vue";
 import {loadMaterial} from "@/utils";
+import {MenuOnEdit} from "@/utils";
 import app from "@/app";
+import "./index.less";
 
 // 加载中的状态
 let loading = ref(true)
@@ -123,6 +126,15 @@ let pageChange = function (nextPageIndex) {
   }else{
     window.location.assign(`/publish/${projectId}/${nextPageIndex}`)
   }
+}
+
+let PreviewOnEdit = function(){
+  if(isPreviewPage.value || useProjectStore().projectId === projectId){
+    router.back()
+    return
+  }
+  const projectJson = JSON.parse(localStorage[projectId]) as ProjectDatabaseJson
+  MenuOnEdit(projectJson, router)
 }
 
 </script>
