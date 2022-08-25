@@ -23,7 +23,7 @@ import "./EditorLeft.less";
 import MaterialBlock from "../MaterialBlock/MaterialBlock.vue";
 import EditorPages from '../EditorPages/EditorPages.vue'
 import EditorElements from '../EditorElements/EditorElements.vue'
-import { getMaterialDefaultProps, materialList } from "@/data"; // @路径导入ts文件报错
+import { getMaterialDefaultProps, materialList, materialMap } from "@/data"; // @路径导入ts文件报错
 import { IMaterial } from "@lowcode512/shared";
 import { useProjectStore } from '@/store'
 import { PageElement } from "@lowcode512/shared";
@@ -33,6 +33,7 @@ const projectStore = useProjectStore();
 const onClick = (e: Event, m: IMaterial) => {
     const ele = PageElement.create();
     ele.mId = m.id;
+    ele.name = materialMap[m.id].name.split('Lc')[1];
     ele.mVersion = m.version;
     ele.props = getMaterialDefaultProps(m)
     projectStore.addElement(ele);
