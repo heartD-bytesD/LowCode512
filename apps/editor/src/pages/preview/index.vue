@@ -129,9 +129,12 @@ let pageChange = function (nextPageIndex) {
 }
 
 let PreviewOnEdit = function(){
-  if(isPreviewPage.value || useProjectStore().projectId === projectId){
-    router.back()
-    return
+  if(isPreviewPage.value){
+    if(useProjectStore().projectId){
+      router.push("/editor/" + useProjectStore().projectId)
+      return
+    }
+    router.push("/editor")
   }
   const projectJson = JSON.parse(localStorage[projectId]) as ProjectDatabaseJson
   MenuOnEdit(projectJson, router)
