@@ -4,14 +4,14 @@ import './index.css'
 export default {
     render: App,
     editorProps: {
-        title: {
-            type: 'string',
-            defaultValue: '请输入文字',
-            display: '内容'
-        },
+        // title: {
+        //     type: 'string',
+        //     defaultValue: '50',
+        //     display: '内容'
+        // },
         color: {
             type: 'color',
-            defaultValue: '#66ccff',
+            defaultValue: '#165DFF',
             display: '滑块颜色'
         },
         barSize: {
@@ -38,12 +38,14 @@ export default {
             defaultValue: 50,
             display: '值'
         },
-        opacity: {
-            type: 'slider',
-            defaultValue: 50,
-            display: '滑条透明度',
-            min: 0,
-            max: 1,
-        }
+
+        // 没有透明度 -> 直接不加
+        // opacity: {
+        //     type: 'slider',
+        //     defaultValue: 50,
+        //     display: '滑条透明度',
+        //     min: 0,
+        //     max: 1,
+        // }
     }
 };

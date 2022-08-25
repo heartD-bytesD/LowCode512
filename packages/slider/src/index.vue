@@ -18,11 +18,11 @@ const radius = computed(() => (round ? 0 : 10));
 <template>
     <div class="lc-div">
         <div class="lc-slider">
-            <div
+            <!-- <div
                 :style="{
                     fontSize: textSize + 'px',
                 }"
-            >{{ title }}</div>
+            >{{ title }}</div> -->
             <input
                 type="range"
                 min="1"
