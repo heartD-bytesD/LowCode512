@@ -15,6 +15,7 @@ function onSave() {
 }
 
 function onPreview() {
+  projectStore.saveProject()
   route.push("/preview");
 }
 
@@ -92,9 +93,9 @@ onMounted(() => {
     <a-button type="outline" @click="onPaste">粘贴</a-button>
     <a-button type="outline" @click="onCut">剪切</a-button>
     <a-button type="outline" @click="onRemove" status='danger'>删除</a-button>
-    <a-button type="outline" @click="onPreview">预览</a-button>
     <a-button type="outline" @click="onReset" status='danger'>重置</a-button>
     <a-button type="outline" @click="onSave">暂存到本地</a-button>
+    <a-button type="outline" @click="onPreview">暂存并预览</a-button>
     <a-button type="outline" @click="onPublish">保存并发布</a-button>
     <a-button type="outline" @click="onBackToIndex">返回主页</a-button>
   </div>
