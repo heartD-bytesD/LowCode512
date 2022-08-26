@@ -61,19 +61,24 @@ function onPublish() {
     reqJson.project_id = router.currentRoute.value.params.id as string
   }
   httpReqStore.postReqJson(reqJson).then((response) => {
-    // 这样比较有风险，但我不想让缓存的实现侵入请求的实现
-    let responseJson = response.data
-    if (!responseJson.status || responseJson.status != 200) {
-      console.log(`请求失败 ${responseJson}`)
-      alert("保存失败")
-      return
+    try{
+      // 这样比较有风险，但我不想让缓存的实现侵入请求的实现
+      let responseJson = response.data
+      if (!responseJson.status || responseJson.status != 200) {
+        console.log(`请求失败 ${responseJson}`)
+        alert("保存失败")
+        return
+      }
+      alert(`保存成功`)
+      router.push(`/publish/${responseJson.project_id}`)
+    }catch (e){
+      alert("发布功能暂时禁用")
     }
-    alert(`保存成功`)
-    router.push(`/publish/${responseJson.project_id}`)
   })
 }
 
 function onBackToIndex(){
+  projectStore.saveProject()
   router.push('/')
 }
 
