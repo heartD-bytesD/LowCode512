@@ -5,9 +5,9 @@
             <MaterialBlock :title="item.title"> </MaterialBlock>
         </div>
     </div>
-   <!-- <a-card title="项目名称">
+   <a-card title="项目名称">
      <a-input @change="projectStore.changeProjectName" :default-value="projectStore.project.name"></a-input>
-   </a-card> -->
+   </a-card>
     <div class="editor-left-pages">
         <EditorPages/>
     </div>
