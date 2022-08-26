@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = defineProps<{
     title: string;
     color: string;
@@ -14,17 +13,17 @@ const props = defineProps<{
 
 <template>
     <div class="lc-radio">
-        <input type="radio" :name="group" />
         <label
             :for="group"
             :style="{
                 fontSize: size + 'px',
-                color: color,
                 backgroundColor: backgroundColor,
                 fontWeight: bold ? 'bold' : 'normal',
                 fontStyle: italic ? 'italic' : 'normal',
+                color: color,
             }"
-            >{{ props.title }}</label
-        >
+            ><input type="radio" :name="group" />
+            <span>{{ props.title }}</span>
+        </label>
     </div>
 </template>

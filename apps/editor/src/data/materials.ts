@@ -50,13 +50,17 @@ export const materialList: IMaterial[] = [
         name: "LcButton",
         title: "按钮",
         thumbnail: "",
-        version: "0.0.1",
-        source: "/lc-button.0.0.1.umd.js",
+        version: "0.0.2",
+        source: "/lc-button.0.0.2.umd.js",
         data: [
             {
                 version: "0.0.1",
                 source: "/lc-button.0.0.1.umd.js",
             },
+            {
+                version: "0.0.2",
+                source: "/lc-button.0.0.2.umd.js",
+            }
         ],
     },
     {

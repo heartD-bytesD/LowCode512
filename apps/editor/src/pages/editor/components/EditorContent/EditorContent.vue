@@ -25,7 +25,7 @@
 
             <div class="editor-body-page" ref="pageRef">
                 <!-- 添加网格  -->
-                <Grid />
+                <Grid @click.native="onClickAir"/>
                 <div v-for="item in projectStore.currentPageElements" :key="item.id" class="element">
                 <!-- 虚线框 VueDragResize-->
                     <VueDragResize @mousedown="projectStore.setCurrentElement(item)"
@@ -90,6 +90,10 @@ function onDragEnd(ev: any) {
 }
 function onSaveSnapshot() {
     projectStore.saveSnapshot()
+}
+
+function onClickAir() {
+    projectStore.currentElementId = undefined;
 }
 
 </script>

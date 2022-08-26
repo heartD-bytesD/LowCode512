@@ -2,15 +2,18 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    color: #606266;
+    color: var(--color);
     text-overflow: ellipsis;
     text-align: center;
     border: 1px solid #ddd;
-    background-color: #fff;
+    background-color: var(--bgc);
+    transition: all 0.1s linear;
 }
 
-
 button:hover {
-    color: #206CCF;
-    background-color: #E8F7FF;
+    filter: brightness(85%);
+}
+
+button:active {
+    transform: translateY(2px);
 }
