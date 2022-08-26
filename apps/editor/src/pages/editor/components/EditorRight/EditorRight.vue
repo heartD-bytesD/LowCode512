@@ -143,6 +143,14 @@
                     <input v-model="newGroup" />
                     <a-button @click="onAddGroup">添加</a-button>
                 </div>
+                <input
+                    v-if="editorProps[key].type === 'slider'"
+                    :value="projectStore.currentElement.props[key]"
+                    @change="onPropsChange($event, key, 'number')"
+                    :min="projectStore.currentElement.props[key].min"
+                    :max="projectStore.currentElement.props[key].max"
+                    type="range"
+                />
             </div>
             <div class="plugItemEvent">
                 <p class="display">自定义事件</p>

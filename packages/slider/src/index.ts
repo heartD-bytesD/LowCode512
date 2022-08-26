@@ -4,11 +4,11 @@ import './index.css'
 export default {
     render: App,
     editorProps: {
-        // title: {
-        //     type: 'string',
-        //     defaultValue: '50',
-        //     display: '内容'
-        // },
+        title: {
+            type: 'string',
+            defaultValue: '',
+            display: '内容'
+        },
         color: {
             type: 'color',
             defaultValue: '#165DFF',
