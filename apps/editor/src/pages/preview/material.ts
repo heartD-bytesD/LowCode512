@@ -8,9 +8,19 @@ export function useMaterial() {
     const project: IProject = JSON.parse(
         localStorage.getItem("__project") || "{}"
     );
-    const materials = project.pages[0].elements.map(item => 
-        materialMap[item.mId] // 通过mId得到物料
-    )
+    const materials = [];
+    const loaded = [];
+    project.pages.map((page) => {
+        page.elements.map(
+            (item) => {
+                if (loaded.includes(item.mId)) {
+                    return;
+                }
+                loaded.push(item.mId);
+                materials.push(materialMap[item.mId]);
+            } // 通过mId得到物料
+        );
+    });
     const loading = ref(false);
     onMounted(() => {
         loading.value = true;
