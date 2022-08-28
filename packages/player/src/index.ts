@@ -12,12 +12,12 @@ export default {
         page: {
             type: "number",
             defaultValue: 1,
-            display: "页数",
+            display: "分p数",
         },
         high_quality: {
             type: "number",
             defaultValue: 1,
-            display: "高清",
+            display: "允许播放高清",
         },
         danmaku: {
             type: "number",
