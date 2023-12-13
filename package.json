@@ -20,6 +20,7 @@
     "vue": "^3.2.37"
   },
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "dev": "pnpm dev"
   }
 }
