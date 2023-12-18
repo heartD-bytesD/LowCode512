@@ -1,13 +1,12 @@
 <template>
 <div class="editor-left">
-    <div class="editor-left-materials">
-        <div v-for="item in materialList" key="item.id" class="material" @click="onClick($event, item)">
-            <MaterialBlock :title="item.title"> </MaterialBlock>
-        </div>
-    </div>
-   <a-card title="项目名称">
-     <a-input @change="projectStore.changeProjectName" :default-value="projectStore.project.name"></a-input>
-   </a-card>
+    <a-collapse>
+        <a-collapse-item header="基础组件" key="base">
+            <div class="editor-left-materials">
+                <MaterialBlock v-for="item in materialList" key="item.id" class="material" @click="onClick($event, item)" :title="item.title"> </MaterialBlock>
+            </div>
+        </a-collapse-item>
+    </a-collapse>
     <div class="editor-left-pages">
         <EditorPages/>
     </div>

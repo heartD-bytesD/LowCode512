@@ -1,5 +1,5 @@
 <template>
-    <a-button type="text" class="material-block">
+    <a-button type="outline" class="material-block">
      <span >{{title}}</span>
     </a-button>
 </template>

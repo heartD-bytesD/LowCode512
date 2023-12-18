@@ -1,8 +1,16 @@
+## 正在重构
+- 布局优化
+- 项目信息移到右边栏
+- 减少原生标签和组件库混用
+- 统一导入值控制组件，不要直接在这里使用形如 `editorProps[key].type === 'color'` 的v-if v-else。建议每一个直接封装成组件，放在一个对象里，通过键值调用import动态导入。
+# 计划内容
+## 全局
 - package由单组件改为包，一个包可以有多个组件（反复初始化仓库是很繁琐的）
 - 减少各类声明
 - 使用deepClone，替换语义不明的map
 - 按键图标化
 - UI隔栅太多
+- 右键菜单栏
 - 统一事件中心
 - dist自动构建、编辑器自动导入
 - 怎么将依赖包设置为自动构建，参考：https://stackoverflow.com/questions/71726084/how-do-i-make-vite-build-my-files-every-time-a-change-is-made
@@ -13,10 +21,14 @@
 
 ## 组件
 - 没有归类，通用属性、自定义属性
+- 组件自己应该有几个核心区块：
+  - 渲染
+  - 编辑（仅编辑器内生效）
+  - 事件（仅预览、发布生效）
 
 ## EditorRight
 - 统一导入值控制组件，不要直接在这里使用形如 `editorProps[key].type === 'color'` 的v-if v-else。建议每一个直接封装成组件，放在一个对象里，通过键值调用import动态导入。
-- 新增通用：readonly、dependency、开关
+- 新增通用：readonly属性、dependency属性、开关控件、
 
 ## EditorLeft
 - 干掉播放器，可以用更通用的iframe或者富文本渲染代替
@@ -27,6 +39,7 @@
 - 点击事件 - 左右键
 - 双击事件
 - 键盘按键
+- onValueChange
 ## 目标事件
 - 跳转窗口（本页、新开窗口）
 - 位置偏移（非重要）（如右键菜单）
@@ -57,3 +70,4 @@
 ### DateEase
 - 输出iframe短链
 ### mobile
+### animate

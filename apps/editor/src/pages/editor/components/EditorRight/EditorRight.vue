@@ -1,195 +1,193 @@
 <template>
     <div class="editor-right">
-        <!-- 页面属性  -->
-        <div class="pagesItem">
-            <span id="itemText">画布属性</span>
-        </div>
-        <!-- 页面名称 -->
-        <div class="pageName" v-if="projectStore.currentElement === undefined">
-            <p class="pageNametitle">页面名称</p>
-            <input
-                :style="{ width: '170px' }"
-                class="pageNameInput"
-                :value="projectStore.currentPage.name"
-                @input="onPageNameChange($event)"
-            />
-            <!-- TODO: 防抖 -->
-        </div>
-
-        <!-- 标题属性 | 图片属性 -->
-        <div
-            class="spin"
-            v-else-if="!projectStore.isLoaded(projectStore.currentElement.mId)"
-        >
-            <a-space>
-                <a-spin :size="32" />
-            </a-space>
-        </div>
-        <div class="plugItems" v-else>
-            <div
-                class="plugItemList"
-                v-for="key in Object.keys(editorProps)"
-                :key="key"
-            >
-                <p v-if="editorProps[key].display" class="display">
-                    {{ editorProps[key].display }}
-                </p>
-                <!-- Changes: -->
-                <!-- editorProps[key].defaultValue => projectStore.currentElement.props[key]  -->
-                <input
-                    v-if="editorProps[key].type === 'string'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key)"
-                />
-                <div v-if="editorProps[key].type === 'image'">
-                    <a-switch v-model="isLocalImage" />
-                    <div v-if="isLocalImage">
-                        <input
-                            :value="
-                                projectStore.currentElement.props.local
-                                    ? ''
-                                    : projectStore.currentElement.props[key]
-                            "
-                            @change="onPropsChange($event, key)"
-                        />
-                    </div>
-                    <div v-else>
-                        <form
-                            method="post"
-                            action="/api/fetchImage"
-                            enctype="multipart/form-data"
-                        ></form>
-                        <input
-                            :value="image_file"
-                            @change="onUpload($event, key)"
-                            ref="imageInput"
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            id="image_input"
-                        />
-                    </div>
-                    <a-button type="secondary" @click="onReset">重置</a-button>
-                </div>
-
-                <input
-                    v-if="editorProps[key].type === 'number'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key, 'number')"
-                    type="number"
-                />
-                <input
-                    v-if="editorProps[key].type === 'value'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key)"
-                    type="number"
-                />
-                <div v-if="editorProps[key].type === 'color'">
-                    <a-button @click="checkObj[key] = !checkObj[key]">
-                        <icon-bg-colors v-if="!checkObj[key]" />
-                        <icon-double-up v-if="checkObj[key]" />
-                        {{ checkObj[key] ? "收起" : "取色" }}
-                    </a-button>
-                    <Transition name="slide">
-                        <!-- 取色器使用固定定位 -->
-                        <ColorPicker
-                            style="position: fixed;"
-                            theme="light"
-                            :color="projectStore.currentElement.props[key]"
-                            :sucker-hide="false"
-                            :sucker-canvas="null"
-                            :sucker-area="[]"
-                            @changeColor="onChangeColor($event, key)"
-                            v-if="checkObj[key]"
-                        />
-                    </Transition>
-                </div>
-                <input
-                    v-if="editorProps[key].type === 'checkbox'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key, 'boolean')"
-                    type="checkbox"
-                />
-                <div v-if="editorProps[key].type === 'group'">
-                    <div v-if="projectStore.currentElement.mId === 5">
-                        <select
-                            class="eventSelect"
-                            :value="projectStore.currentElement.props[key]"
-                            @change="onPropsChange($event, key)"
-                        >
-                            <option
-                                class="eventOption"
-                                v-for="groupName in projectStore.currentRadioGroups"
-                            >
-                                {{ groupName }}
-                            </option>
-                        </select>
-                    </div>
-                    <div v-else>
-                        <select
-                            class="eventSelect"
-                            :value="projectStore.currentElement.props[key]"
-                            @change="onPropsChange($event, key)"
-                        >
-                            <option
-                                class="eventOption"
-                                v-for="groupName in projectStore.currentCheckboxGroups"
-                            >
-                                {{ groupName }}
-                            </option>
-                        </select>
-                    </div>
-
-                    <input v-model="newGroup" />
-                    <a-button @click="onAddGroup">添加</a-button>
-                </div>
-                <input
-                    v-if="editorProps[key].type === 'slider'"
-                    :value="projectStore.currentElement.props[key]"
-                    @change="onPropsChange($event, key, 'number')"
-                    :min="projectStore.currentElement.props[key].min"
-                    :max="projectStore.currentElement.props[key].max"
-                    type="range"
-                />
-            </div>
-            <div class="plugItemEvent">
-                <p class="display">自定义事件</p>
-                <select
-                    class="eventSelect"
-                    :value="eventStore.currentType"
-                    @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
+        <a-tabs default-active-key="2" >
+            <a-tab-pane key="1">
+                <template #title><icon-common /></template>
+                <!-- <div
+                    class="spin"
+                    v-if="!projectStore.isLoaded(projectStore.currentElement.mId)"
                 >
-                    <option
-                        class="eventOption"
-                        v-for="item in eventStore.editorEvents"
-                        :key="item.type"
-                    >
-                        {{ item.type }}
-                    </option>
-                </select>
-                <select class="eventSelect">
-                    <option
-                        class="eventOption"
-                        v-for="item in eventStore.currentEvents"
-                        :key="item.name"
-                    >
-                        {{ item.name }}
-                    </option>
-                </select>
-                <div v-if="eventStore.currentEventArgs">
+                    <a-space>
+                        <a-spin :size="32" />
+                    </a-space>
+                </div> -->
+                <!-- <div class="plugItems">
                     <div
-                        v-for="(item, index) in eventStore.currentEventArgs"
-                        :key="index"
+                        class="plugItemList"
+                        v-for="key in Object.keys(editorProps)"
+                        :key="key"
                     >
+                        <p v-if="editorProps[key].display" class="display">
+                            {{ editorProps[key].display }}
+                        </p>
                         <input
-                            v-if="item.type === 'string'"
-                            @input="onEventArgsChange($event, index)"
+                            v-if="editorProps[key].type === 'string'"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key)"
+                        />
+                        <div v-if="editorProps[key].type === 'image'">
+                            <a-switch v-model="isLocalImage" />
+                            <div v-if="isLocalImage">
+                                <input
+                                    :value="
+                                        projectStore.currentElement.props.local
+                                            ? ''
+                                            : projectStore.currentElement.props[key]
+                                    "
+                                    @change="onPropsChange($event, key)"
+                                />
+                            </div>
+                            <div v-else>
+                                <form
+                                    method="post"
+                                    action="/api/fetchImage"
+                                    enctype="multipart/form-data"
+                                ></form>
+                                <input
+                                    :value="image_file"
+                                    @change="onUpload($event, key)"
+                                    ref="imageInput"
+                                    type="file"
+                                    accept="image/*"
+                                    name="image"
+                                    id="image_input"
+                                />
+                            </div>
+                            <a-button type="secondary" @click="onReset">重置</a-button>
+                        </div>
+
+                        <input
+                            v-if="editorProps[key].type === 'number'"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key, 'number')"
+                            type="number"
+                        />
+                        <input
+                            v-if="editorProps[key].type === 'value'"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key)"
+                            type="number"
+                        />
+                        <div v-if="editorProps[key].type === 'color'">
+                            <a-button @click="checkObj[key] = !checkObj[key]">
+                                <icon-bg-colors v-if="!checkObj[key]" />
+                                <icon-double-up v-if="checkObj[key]" />
+                                {{ checkObj[key] ? "收起" : "取色" }}
+                            </a-button>
+                            <Transition name="slide">
+                                <ColorPicker
+                                    style="position: fixed;"
+                                    theme="light"
+                                    :color="projectStore.currentElement.props[key]"
+                                    :sucker-hide="false"
+                                    :sucker-canvas="null"
+                                    :sucker-area="[]"
+                                    @changeColor="onChangeColor($event, key)"
+                                    v-if="checkObj[key]"
+                                />
+                            </Transition>
+                        </div>
+                        <input
+                            v-if="editorProps[key].type === 'checkbox'"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key, 'boolean')"
+                            type="checkbox"
+                        />
+                        <div v-if="editorProps[key].type === 'group'">
+                            <div v-if="projectStore.currentElement.mId === 5">
+                                <select
+                                    class="eventSelect"
+                                    :value="projectStore.currentElement.props[key]"
+                                    @change="onPropsChange($event, key)"
+                                >
+                                    <option
+                                        class="eventOption"
+                                        v-for="groupName in projectStore.currentRadioGroups"
+                                    >
+                                        {{ groupName }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div v-else>
+                                <select
+                                    class="eventSelect"
+                                    :value="projectStore.currentElement.props[key]"
+                                    @change="onPropsChange($event, key)"
+                                >
+                                    <option
+                                        class="eventOption"
+                                        v-for="groupName in projectStore.currentCheckboxGroups"
+                                    >
+                                        {{ groupName }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <input v-model="newGroup" />
+                            <a-button @click="onAddGroup">添加</a-button>
+                        </div>
+                        <input
+                            v-if="editorProps[key].type === 'slider'"
+                            :value="projectStore.currentElement.props[key]"
+                            @change="onPropsChange($event, key, 'number')"
+                            :min="projectStore.currentElement.props[key].min"
+                            :max="projectStore.currentElement.props[key].max"
+                            type="range"
                         />
                     </div>
-                </div>
-                <a-button type="primary" @click="onEventSave">保存</a-button>
-            </div>
-        </div>
+                    <div class="plugItemEvent">
+                        <p class="display">自定义事件</p>
+                        <select
+                            class="eventSelect"
+                            :value="eventStore.currentType"
+                            @change="e => eventStore.onTypeChange((e.target as HTMLSelectElement).value)"
+                        >
+                            <option
+                                class="eventOption"
+                                v-for="item in eventStore.editorEvents"
+                                :key="item.type"
+                            >
+                                {{ item.type }}
+                            </option>
+                        </select>
+                        <select class="eventSelect">
+                            <option
+                                class="eventOption"
+                                v-for="item in eventStore.currentEvents"
+                                :key="item.name"
+                            >
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <div v-if="eventStore.currentEventArgs">
+                            <div
+                                v-for="(item, index) in eventStore.currentEventArgs"
+                                :key="index"
+                            >
+                                <input
+                                    v-if="item.type === 'string'"
+                                    @input="onEventArgsChange($event, index)"
+                                />
+                            </div>
+                        </div>
+                        <a-button type="primary" @click="onEventSave">保存</a-button>
+                    </div>
+                </div> -->
+            </a-tab-pane>
+            <a-tab-pane key="2">
+                <template #title><icon-file /></template>
+                <h3>画布属性</h3>
+                <h4>页面名称</h4>
+                <a-input :model-value="projectStore.currentPage.name" @input="onPageNameChange" />
+            </a-tab-pane>
+            <a-tab-pane key="3" >
+                <template #title><icon-settings /></template>
+                <h3>项目配置</h3>
+                <h4>项目名称</h4>
+                <a-input :model-value="projectStore.project.name" @input="projectStore.changeProjectName"></a-input>
+                <h3>全局设置</h3>
+            </a-tab-pane>
+        </a-tabs>
     </div>
 </template>
 
@@ -237,8 +235,8 @@ function onPropsChange(e: Event, key: string, type?: string) {
     }
 }
 
-function onPageNameChange(e: Event) {
-    projectStore.changePageName((e.target as HTMLInputElement).value);
+function onPageNameChange(value: string) {
+    projectStore.changePageName(value);
 }
 
 function onEventSave() {
