@@ -2,7 +2,12 @@
 - 布局优化
 - 项目信息移到右边栏
 - 减少原生标签和组件库混用
-- 统一导入值控制组件，不要直接在这里使用形如 `editorProps[key].type === 'color'` 的v-if v-else。建议每一个直接封装成组件，放在一个对象里，通过键值调用import动态导入。
+1.package由单组件改为包，一个包可以有多个组件（反复初始化仓库是很繁琐的）
+2.统一导入值控制组件，不要直接在这里使用形如 `editorProps[key].type === 'color'` 的v-if v-else。建议每一个直接封装成组件，放在一个对象里，通过键值调用import动态导入。
+- 为杜绝属性名写错、属性类型赋错、提供注释，需统一editorProps里的类型
+  - 统一到什么地方：core，且必须是packages下
+  - 编辑器需要做的修改：每个组件有source，那干脆把组件的所有信息（从缩略图、展示名到source）全部给移到组件本身去（packages），编辑器只需要做加载，拿到组件信息，然后挂载
+  - 必有的core（因为要给第三方开发提供基础类型），其他为官方可选。这样既展示了如何加载本地包来帮助自己开发，也展示了如何引入第三方资源
 # 计划内容
 ## 全局
 - package由单组件改为包，一个包可以有多个组件（反复初始化仓库是很繁琐的）
@@ -14,10 +19,14 @@
 - 统一事件中心
 - dist自动构建、编辑器自动导入
 - 怎么将依赖包设置为自动构建，参考：https://stackoverflow.com/questions/71726084/how-do-i-make-vite-build-my-files-every-time-a-change-is-made
+- 第三方的包 怎么接进来：
+  1. 使用我们的仓库开发
+  2. 上插件市场，提供.umd.js的链接
 - 配合上面的思路，ignore一下编辑器editor/public下的umd.js
 - CI/CD 时加一个项构建到public、再启动编辑器即可
 - 提供一个组件包的模板
-- lint自动化
+- i18n依然给packages处理即可，后续放在模板里
+- lint自动化，统一为 2空格 或 4空格 为 1tab
 
 ## 组件
 - 没有归类，通用属性、自定义属性
@@ -28,7 +37,7 @@
 
 ## EditorRight
 - 统一导入值控制组件，不要直接在这里使用形如 `editorProps[key].type === 'color'` 的v-if v-else。建议每一个直接封装成组件，放在一个对象里，通过键值调用import动态导入。
-- 新增通用：readonly属性、dependency属性、开关控件、
+- 新增通用：readonly属性、dependency属性、开关控件（switch）、选择控件（select，需要兼容各种数据源，首要是来自页面的、来自网络的两种）、图片（暂时只提供url输入+六展示，不提供上传，以保证图片如果出问题，必定是图片提供方的问题）
 
 ## EditorLeft
 - 干掉播放器，可以用更通用的iframe或者富文本渲染代替

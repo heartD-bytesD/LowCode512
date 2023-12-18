@@ -23,9 +23,8 @@ import MaterialBlock from "../MaterialBlock/MaterialBlock.vue";
 import EditorPages from '../EditorPages/EditorPages.vue'
 import EditorElements from '../EditorElements/EditorElements.vue'
 import { getMaterialDefaultProps, materialList, materialMap } from "@/data"; // @路径导入ts文件报错
-import { IMaterial } from "@lowcode512/shared";
+import { IMaterial, PageElement } from "@lowcode512/shared";
 import { useProjectStore } from '@/store'
-import { PageElement } from "@lowcode512/shared";
 
 const projectStore = useProjectStore();
 
