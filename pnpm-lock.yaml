@@ -89,6 +89,8 @@ importers:
 
   packages/checkbox: {}
 
+  packages/core: {}
+
   packages/image: {}
 
   packages/player: {}
