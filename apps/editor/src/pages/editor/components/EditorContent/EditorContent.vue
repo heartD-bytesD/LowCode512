@@ -96,6 +96,7 @@ onMounted(() => {
             } // 通过mId得到物料
         );
     });
+    console.log("物料: ", materials)
     Promise.all(Object.values(materials).map(projectStore.load)).then(() => {
         materials.forEach((m) => {
             app.component(m.name, getMaterialRenderFun(m));

@@ -1,5 +1,14 @@
 import { IMaterial } from "@lowcode512/shared";
 
+export const packages = [
+    {
+        id: 'core',
+        version: '0.0.3',
+        source: '/core.0.0.3.umd',
+        name: '基础组件',
+    },
+]
+
 export const materialList: IMaterial[] = [
     {
         id: 1,

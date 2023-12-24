@@ -22,7 +22,7 @@ export function loadScript(src: string) {
     });
 }
 
-export async function loadMaterial(m: IMaterial) {
+export async function loadMaterial(m: any) {
     return loadScript(m.source);
 }
 

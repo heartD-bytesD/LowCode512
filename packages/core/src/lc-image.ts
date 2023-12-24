@@ -1,8 +1,7 @@
-import App from './index.vue'
-import './index.css'
+import LcImage from './lc-image.vue'
 
 export default {
-    render: App,
+    render: LcImage,
     editorProps: {
         src: {
             type: 'image',
