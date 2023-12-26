@@ -12,5 +12,6 @@ export default defineConfig({
             formats: ['umd'],
         },
         cssCodeSplit: true,
-    }
+        outDir: '../../apps/editor/public'
+    },
 })

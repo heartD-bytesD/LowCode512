@@ -4,4 +4,7 @@
         "../../env.d.ts",
         "./src/**/*",
     ],
+    "compilerOptions": {
+        "removeComments": true,
+    }
 }

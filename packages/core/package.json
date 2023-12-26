@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build"
+    "build": "vite build --watch"
   },
   "keywords": [
     "low-code",
