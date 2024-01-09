@@ -1,4 +1,4 @@
-export function createProp<T>(props: T) {
-  return props
+export function createProp<T>(type: string, props: T) {
+  return { editType: type, props }
 }
 

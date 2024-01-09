@@ -22,10 +22,6 @@ export function loadScript(src: string) {
     });
 }
 
-loadScript('/core.0.0.3.umd.js').then(res => {
-    console.log(res)
-})
-
 export async function loadMaterial(m: any) {
     return loadScript(m.source);
 }
