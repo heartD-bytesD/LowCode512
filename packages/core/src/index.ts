@@ -7,6 +7,7 @@
         components: {
             'lc-button': () => import("./lc-button"),
             'lc-image': () => import("./lc-image"),
+            'lc-text': () => import("./lc-text"),
         }
     })
     !window['Lc'] && (window['Lc'] = {});
